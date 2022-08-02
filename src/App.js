@@ -1,25 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
+import AdvertiseBar from './components/AdvertiseBar';
+import AdvertiseSubscribeBanner from './components/AdvertiseSubscribeBanner';
+import CoinMarket from './components/CoinMarket';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import TodayCoinBar from './components/TodayCoinBar';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+     <Header/>
+    <div className='bg-black h-1'/>
+
+     <AdvertiseBar/>
+     <div className='bg-black h-1'/>
+     <TodayCoinBar/>
+     <div className='bg-black h-1'/>
+     <CoinMarket/>
+     <div className='bg-black h-1'/>
+     <AdvertiseSubscribeBanner/>
+     <div className='bg-black h-1'/>
+     <Footer/>
+     
     </div>
   );
 }
-
 export default App;
