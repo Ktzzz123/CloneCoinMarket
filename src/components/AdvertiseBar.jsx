@@ -15,7 +15,7 @@ export default function AdvertiseBar() {
 
 
 
-      <div className='w-1/2 h-1/2 md:flex hidden'>
+      <div className='w-1/2 h-1/2 flex'>
        
         <Banner content = 'Market cap' value='20555623265555' percent='5.96'
          img = 'https://s3.coinmarketcap.com/generated/sparklines/sector/marketcap/web/7d/60291fa0db1be76c46298e83.svg'/>

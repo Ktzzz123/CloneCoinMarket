@@ -3,7 +3,7 @@ import Num from './header/Num'
 
 export default function Header() {
   return (
-    <div className=''>
+    <div className='bg-white'>
 
     <div className='bg-white flex justify-between'>
         <div className='flex items-center'>
@@ -28,9 +28,9 @@ export default function Header() {
 
 
         <div className='flex items-center '>
-            <div className='mr-5'>English</div>
-            <div className='mr-5'>USD</div>
-            <div className='bg-black w-px'/>
+            <div className='mr-5 font-bold'>English</div>
+            <div className='mr-5 font-bold'>USD</div>
+            <div className='bg-slate-400 w-px'></div>
                 <img className='mx-5' src='https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg'/>
             <button className='m-5 p-3 border-solid border-blue-700 rounded-xl' >Login</button>
             <button className='m-5 p-3 bg-blue-700 text-white rounded-xl '>Sign up</button>
