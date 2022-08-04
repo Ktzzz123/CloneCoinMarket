@@ -1,6 +1,8 @@
 import React from 'react'
 import Card from './todayCoinBar/Card'
 
+
+
 export default function TodayCoinBar() {
   const content = 1.07;
   const percent = 0.27
