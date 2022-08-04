@@ -13,10 +13,10 @@ export default function Header() {
                 <Num content = '499'/>
             </div>
             <div className='flex text-xl mr-10'>Market Cap:
-                <Num content = '1,052,769,066,640.602'/>
+                <Num content = '$1,052,769,066,640.602'/>
             </div>
             <div className='flex text-xl mr-10'>24h Vol:
-                <Num content = '76,060,831,770.75'/>
+                <Num content = '$76,060,831,770.75'/>
             </div>
             <div className='flex text-xl mr-10'>Dominance: 
                 <Num content = 'BTC: 41.5% ETH: 18.3%'/>
@@ -37,7 +37,7 @@ export default function Header() {
         </div>
         
     </div>
-    <div className='bg-black h-1'/>
+    <div className='bg-slate-300  h-px'/>
 
 {/* second header */}
 

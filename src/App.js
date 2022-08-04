@@ -11,17 +11,12 @@ function App() {
     <div className='bg-slate-50 h-screen'>
       <div className='mx-11'>
         <Header/>
-      <div className='bg-black h-1'/>
       <body className='bg-slate-50'>
       <div className='m-auto'>
         <AdvertiseBar />
-      <div className='bg-black h-1'/>
         <TodayCoinBar/>
-      <div className='bg-black h-1'/>
         <CoinMarket/>
-      <div className='bg-black h-1'/>
         <AdvertiseSubscribeBanner/>
-      <div className='bg-black h-1'/>
         <Footer/>
       </div>
       </body>
