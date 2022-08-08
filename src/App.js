@@ -1,10 +1,10 @@
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import AdvertiseBar from './components/AdvertiseBar';
 import AdvertiseSubscribeBanner from './components/AdvertiseSubscribeBanner';
-import CoinMarket from './components/CoinMarket';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import TodayCoinBar from './components/TodayCoinBar';
+import DetailsCoinPage from './pages/DetailsCoinPage';
+import Homepage from './pages/Homepage';
 
 function App() {
   return (
@@ -13,9 +13,10 @@ function App() {
         <Header/>
       <body className='bg-slate-50'>
       <div className='m-auto'>
-        <AdvertiseBar />
-        <TodayCoinBar/>
-        <CoinMarket/>
+        <Routes>
+          <Route path='/' element={<Homepage/>}/>
+          <Route path='/coin/:id' element={<DetailsCoinPage/>}/>
+        </Routes>
         <AdvertiseSubscribeBanner/>
         <Footer/>
       </div>
