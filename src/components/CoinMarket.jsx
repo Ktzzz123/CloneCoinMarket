@@ -30,12 +30,54 @@ class MarketSymbolInfo {
 let structureData = {};
 window.structureData = structureData
 
-socket.on("market-data", (msg) => {
+let categoriesData = {};
+window.categoriesData = categoriesData
+  socket.emit("method",
+  {
+    "method": "cmc_crypto_category",
+    "id": 1,
+    "params": ["605e2ce9d41eae1066535f7c"]
+})
+
+  socket.on('method-response',(data)=>{
+    categoriesData = data
+    console.log(categoriesData);
+    console.log(data);
+    console.log(structureData);
+    if (!structureData) {
+      structureData = new MarketSymbolInfo();
+    }
+    console.log(structureData)
+    Object.values(structureData).map((c)=>{
+      if(c.key){
+        let temp = c.trade.symbol_id||c.ohlcv["1DAY"].symbol_id 
+        console.log(temp)
+        console.log(c)
+      }
+    })
+    // console.log(structureData);
+
+    let temp = Object.values(data.result.coins)
+    
+    // console.log(structureData)
+    temp.map((coin)=>{
+      Object.values(structureData).map((c)=>{
+        // console.log(c)
+            })
+    })
+    // console.log(structureData);
+    
+  })
+
+
+ socket.on("market-data", (msg) => {
   if (!structureData[msg.symbol_id]) {
     structureData[msg.symbol_id] = new MarketSymbolInfo();
   }
+  
   if (msg.type === "trade") {
     structureData[msg.symbol_id]["trade"] = msg;
+    
   }
   if (msg.type === "ohlcv") {
     if (msg.period_id === "1DAY") {
@@ -47,14 +89,21 @@ socket.on("market-data", (msg) => {
     if (msg.period_id === "1HRS") {
       structureData[msg.symbol_id]["ohlcv"]["1HRS"] = msg;
     }
+    for (var i in structureData){
+      if(!structureData.key){
+        let temp = structureData[i]['ohlcv']['1DAY'].symbol_id|| structureData[i].trade.symbol_id
+        temp = temp.split('_')[2]
+       
+        structureData[i].key = temp
+      }
+    }
+
   }
-  console.log(structureData)
+  // console.log(structureData)
 
 });
 export default function CoinMarket(props) {
   const navigate = useNavigate();
-  const [listSymbolId, setListSymbolId] = useState([]);
-  const [dataTable, setDataTable] = useState([]);
   
   
 
@@ -71,13 +120,14 @@ export default function CoinMarket(props) {
 
   const updateData=()=>{
     const listSymbol = Object.keys(structureData)
-    setListSymbolId(listSymbol)
     const dataTb = listSymbol.map((key) => {
       return { ...structureData[key] }
     })
     console.log(dataTb);
     dataTb.map((transaction,index,arr)=>{
+      // console.log(transaction)
       let text = transaction.trade.symbol_id
+      
       data.map((coin)=>{
         try {
           
@@ -94,7 +144,7 @@ export default function CoinMarket(props) {
 
             }
             if(temp>0){
-              console.log(transaction.ohlcv["1HRS"].price_open/transaction.ohlcv["1HRS"].price_close*100)
+              // console.log(transaction.ohlcv["1HRS"].price_open/transaction.ohlcv["1HRS"].price_close*100)
             }
 
             if(isNaN(((transaction.ohlcv["12HRS"].price_open/transaction.ohlcv["12HRS"].price_close*100)-100).toFixed(2))){
@@ -115,10 +165,10 @@ export default function CoinMarket(props) {
 
           }
           else{
-            console.log(text.split('_')[2])
+            // console.log(text.split('_')[2])
           }
         } catch (error) {
-          console.log('wait for data')
+          // console.log('wait for data')
         }
       })
       
@@ -145,7 +195,7 @@ export default function CoinMarket(props) {
             height="16px"
             width="16px"
             viewBox="0 0 24 24"
-            class="sc-1prm8qw-0 eFjnQR"
+            className="sc-1prm8qw-0 eFjnQR"
           >
             <path
               d="M13.8182 2H13V11H22V10.1818C22 5.68182 18.3182 2 13.8182 2Z"
