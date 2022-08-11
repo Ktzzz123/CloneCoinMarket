@@ -248,7 +248,6 @@ export default function CoinMarket(props) {
         <tbody>
           {data.map((data, index) => {
             return (
-              <>
                 <tr
                   key={String(index)}
                   className="items-center text-right cursor-pointer"
@@ -313,7 +312,6 @@ export default function CoinMarket(props) {
                     </svg>
                   </td>
                 </tr>
-              </>
             );
           })}
         </tbody>

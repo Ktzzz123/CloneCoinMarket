@@ -1,7 +1,67 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import { eventList } from '../utils/constants/eventLists';
+import { methodCall } from '../utils/request';
+import StaticStore from '../utils/StaticStore';
+import { subcribeServer } from '../utils/subcribe';
 import Num from './header/Num'
 
 export default function Header() {
+    const [dataCategories, setDataCategories] = useState();
+    const [dataTable, setdataTable] = useState([]);
+
+    useEffect(() => {
+        asyncGetData()
+        asyncSubData()
+        setTimeout(() => {
+            asyncGetDataETH()
+        }, 5000)
+    
+
+        const listenData = StaticStore.appEvent.subscribe((msg) => {
+            if (msg.type === eventList.UPDATE_MARKET_DATA) {
+                // console.log("UPDATE_MARKET_DATA", msg, StaticStore.StructureData);
+                // Thực hiện logic set lại dataTable
+            }
+        })
+        return () => {
+            listenData.unsubscribe()
+        }
+
+    }, []);
+
+    const asyncGetData = async () => {
+        console.log("asyncGetData");
+        const data = await methodCall({
+                method: "cmc_crypto_category",
+                params: ["605e2ce9d41eae1066535f7c"]
+            })
+        setDataCategories(data)
+        console.log("data asyncGetData", data);
+
+    }
+    const asyncGetDataETH = async () => {
+        console.log("asyncGetDataETH");
+        const data = await methodCall({
+                method: "cmc_crypto_info",
+                params: ["ETH"]
+            })
+        StaticStore.SymbolInfo['ETH'].info = data.result
+        console.log("data After set ETH", StaticStore.SymbolInfo);
+        // setDataCategories(data)
+        // console.log("data asyncGetDataETH", data);
+
+    }
+    const asyncSubData = async () => {
+        console.log("asyncSubData");
+        const data = await subcribeServer({
+                method: "sub",
+                params: ["FTX_SPOT_ETH_USDT"]
+            })
+        console.log("data asyncSubData", data);
+
+    }
+    console.log("dataCategories", dataCategories);
+
   return (
     <div className='bg-white'>
 
