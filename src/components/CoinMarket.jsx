@@ -30,7 +30,7 @@ class MarketSymbolInfo {
 let structureData = {};
 window.structureData = structureData
 
-let categoriesData = {};
+let categoriesData = [];
 window.categoriesData = categoriesData
   socket.emit("method",
   {
@@ -40,31 +40,22 @@ window.categoriesData = categoriesData
 })
 
   socket.on('method-response',(data)=>{
-    categoriesData = data
-    console.log(categoriesData);
-    console.log(data);
-    console.log(structureData);
-    if (!structureData) {
-      structureData = new MarketSymbolInfo();
-    }
-    console.log(structureData)
-    Object.values(structureData).map((c)=>{
-      if(c.key){
-        let temp = c.trade.symbol_id||c.ohlcv["1DAY"].symbol_id 
-        console.log(temp)
-        console.log(c)
-      }
-    })
-    // console.log(structureData);
-
+   
     let temp = Object.values(data.result.coins)
-    
-    // console.log(structureData)
     temp.map((coin)=>{
-      Object.values(structureData).map((c)=>{
-        // console.log(c)
-            })
+      if (!structureData) {
+        structureData = new MarketSymbolInfo();
+      }
+      
+
+
     })
+    
+   
+
+    
+
+    
     // console.log(structureData);
     
   })
@@ -99,7 +90,7 @@ window.categoriesData = categoriesData
     }
 
   }
-  // console.log(structureData)
+  // console.log(structureData)  
 
 });
 export default function CoinMarket(props) {
@@ -123,7 +114,6 @@ export default function CoinMarket(props) {
     const dataTb = listSymbol.map((key) => {
       return { ...structureData[key] }
     })
-    console.log(dataTb);
     dataTb.map((transaction,index,arr)=>{
       // console.log(transaction)
       let text = transaction.trade.symbol_id
