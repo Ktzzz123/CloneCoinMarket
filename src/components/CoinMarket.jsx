@@ -48,13 +48,9 @@ window.categoriesData = categoriesData
       }
       
 
+      
 
     })
-    
-   
-
-    
-
     
     // console.log(structureData);
     
