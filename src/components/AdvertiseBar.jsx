@@ -6,11 +6,11 @@ export default function AdvertiseBar() {
     <div className='py-6 flex '>
 
       <div className='w-1/2 px-8'>
-        <text className='text-5xl font-bold mb-12'>Top Collectibles and NFTs Tokens by Market Capitalization</text>
+        <div className='text-5xl font-bold mb-12'>Top Collectibles and NFTs Tokens by Market Capitalization</div>
         <br/>
-        <text>Listed below are the top crypto coins and tokens used for Collectibles & NFTs. They are listed in size by market capitalization. To reorder the list, simply click on one of the options - such as 24h or 7d - to see the sector from a different perspective.Learn more about NFT collections 
+        <div>Listed below are the top crypto coins and tokens used for Collectibles & NFTs. They are listed in size by market capitalization. To reorder the list, simply click on one of the options - such as 24h or 7d - to see the sector from a different perspective.Learn more about NFT collections 
           <a> here</a>
-        </text>
+        </div>
       </div>
 
 

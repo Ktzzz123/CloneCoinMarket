@@ -7,6 +7,3 @@ export const data = [
 
 ]
 
-export const DetailData = [
-    ['https://s2.coinmarketcap.com/static/img/coins/64x64/1.png','Bitcoin','BTC', 22887.88, -0.89, -0.68, 1.16, 438336317350, 26240694664,1142549 , 19111862,'https://s3.coinmarketcap.com/generated/sparklines/web/7d/2781/1.svg'],
-]

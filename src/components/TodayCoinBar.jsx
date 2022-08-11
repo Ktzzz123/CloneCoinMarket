@@ -9,7 +9,7 @@ export default function TodayCoinBar() {
   return (
     <div >
       <h1 className='font-bold text-3xl'>Today's Cryptocurrency Prices by Market Cap</h1>
-      <text>The global crypto market cap is ${content}, a {percent}% increase over the last day. </text>
+      <div>The global crypto market cap is ${content}, a {percent}% increase over the last day. </div>
       <a>Read more</a>
       <div className='flex'>
       <Card img = 'https://s2.coinmarketcap.com/static/cloud/img/TrendingIcon.png?_=309fd9c' header = 'Trending' 
