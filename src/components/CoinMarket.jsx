@@ -17,19 +17,20 @@ const socket = io('http://io.nvdise.space', {
 
 class MarketSymbolInfo {
   constructor() {
+    this.key = '';
     this.trade = {};
     this.ohlcv = {
       "1DAY": {},
       "12HRS": {},
       "1HRS": {},
     };
+    this.info = {}
   }
 }
 let structureData = {};
 window.structureData = structureData
 
 socket.on("market-data", (msg) => {
-  // console.log(msg)
   if (!structureData[msg.symbol_id]) {
     structureData[msg.symbol_id] = new MarketSymbolInfo();
   }
@@ -47,6 +48,8 @@ socket.on("market-data", (msg) => {
       structureData[msg.symbol_id]["ohlcv"]["1HRS"] = msg;
     }
   }
+  console.log(structureData)
+
 });
 export default function CoinMarket(props) {
   const navigate = useNavigate();
@@ -59,7 +62,7 @@ export default function CoinMarket(props) {
   useEffect(() => {
     const interval = setInterval(() => {
       updateData()
-    }, 1000);
+    }, 3000);
     return()=>{
       clearInterval(interval);
       }
@@ -87,19 +90,32 @@ export default function CoinMarket(props) {
               // console.log(typeof(temp))
             }else {
               coin[4] = temp
-              console.log('coin4',coin[4])
+              // console.log('coin4',coin[4])
 
             }
             if(temp>0){
               console.log(transaction.ohlcv["1HRS"].price_open/transaction.ohlcv["1HRS"].price_close*100)
             }
+
+            if(isNaN(((transaction.ohlcv["12HRS"].price_open/transaction.ohlcv["12HRS"].price_close*100)-100).toFixed(2))){
+              // console.log('wait for data')
+            }else{
+              coin[5] = ((transaction.ohlcv["12HRS"].price_open/transaction.ohlcv["12HRS"].price_close*100)-100).toFixed(2)
+              // console.log('coin5',coin[5])
+            }
+            
+            if(isNaN(((transaction.ohlcv["1DAY"].price_open/transaction.ohlcv["1DAY"].price_close*100)-100).toFixed(2))){
+              // console.log('wait for data')
+            }else{
+              coin[6] = ((transaction.ohlcv["1DAY"].price_open/transaction.ohlcv["1DAY"].price_close*100)-100).toFixed(2)
+              // console.log('coin6',coin[6])
+            }
+
+
+
           }
-          let tempp = ((transaction.ohlcv["12HRS"].price_open/transaction.ohlcv["12HRS"].price_close*100)-100).toFixed(2)
-          if(isNaN(((transaction.ohlcv["12HRS"].price_open/transaction.ohlcv["12HRS"].price_close*100)-100).toFixed(2))){
-            console.log('wait for data')
-          }else{
-            coin[5] = ((transaction.ohlcv["12HRS"].price_open/transaction.ohlcv["12HRS"].price_close*100)-100).toFixed(2)
-            console.log('coin5',coin[5])
+          else{
+            console.log(text.split('_')[2])
           }
         } catch (error) {
           console.log('wait for data')
@@ -233,7 +249,7 @@ export default function CoinMarket(props) {
                     {" "}
                     <div>{data[3]}</div>
                   </td>
-                  <td className={isIncrease(data[4])?'text-green-600 px-5':'text-red-600 px-5'} > {data[4]}</td>
+                  <td className={isIncrease(data[4])?'text-green-600 px-5':'text-red-600 px-5'} > {data[4]}</td> 
                   <td className={isIncrease(data[5])?'text-green-600 px-5':'text-red-600 px-5'}> {data[5]}</td>
                   <td className={isIncrease(data[6])?'text-green-600 px-5':'text-red-600 px-5'}> {data[6]}</td>
                   <td className="px-5"> {data[7]}</td>
