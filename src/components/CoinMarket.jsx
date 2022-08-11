@@ -72,20 +72,48 @@ export default function CoinMarket(props) {
     const dataTb = listSymbol.map((key) => {
       return { ...structureData[key] }
     })
-  
+    console.log(dataTb);
     dataTb.map((transaction,index,arr)=>{
       let text = transaction.trade.symbol_id
-      console.log(transaction)
       data.map((coin)=>{
-        console.log(coin[1])
-        if(text.split('_')[2]===coin[2]){
-        coin[3] = transaction.trade.price
-        console.log(typeof(transaction.trade.price))
+        try {
+          
+          if(text.split('_')[2]===coin[2]){
+          coin[3] = transaction.trade.price;
+          // console.log(coin[3])
+          let temp =((transaction.ohlcv["1HRS"].price_open/transaction.ohlcv["1HRS"].price_close*100)-100).toFixed(2)
+            if (isNaN(temp))
+            {
+              // console.log(typeof(temp))
+            }else {
+              coin[4] = temp
+              console.log('coin4',coin[4])
+
+            }
+            if(temp>0){
+              console.log(transaction.ohlcv["1HRS"].price_open/transaction.ohlcv["1HRS"].price_close*100)
+            }
+          }
+          let tempp = ((transaction.ohlcv["12HRS"].price_open/transaction.ohlcv["12HRS"].price_close*100)-100).toFixed(2)
+          if(isNaN(((transaction.ohlcv["12HRS"].price_open/transaction.ohlcv["12HRS"].price_close*100)-100).toFixed(2))){
+            console.log('wait for data')
+          }else{
+            coin[5] = ((transaction.ohlcv["12HRS"].price_open/transaction.ohlcv["12HRS"].price_close*100)-100).toFixed(2)
+            console.log('coin5',coin[5])
+          }
+        } catch (error) {
+          console.log('wait for data')
         }
       })
       
     })
     
+  }
+
+  const isIncrease =(num)=>{
+    if(num>0)
+    return true 
+    else return false
   }
 
   return (
@@ -154,8 +182,8 @@ export default function CoinMarket(props) {
             <th className="text-left w-80">Name</th>
             <th className="text-right w-36">Price</th>
             <th className="text-right w-28">1h %</th>
+            <th className="text-right w-28">12h %</th>
             <th className="text-right w-28">24h %</th>
-            <th className="text-right w-28">7d %</th>
             <th className="text-right w-60">Market Cap</th>
             <th className="text-right w-60">Volume(24h)</th>
             <th className="text-right w-60">Circulating Supply</th>
@@ -205,9 +233,9 @@ export default function CoinMarket(props) {
                     {" "}
                     <div>{data[3]}</div>
                   </td>
-                  <td className="px-5"> {data[4]}</td>
-                  <td className="px-5"> {data[5]}</td>
-                  <td className="px-5"> {data[6]}</td>
+                  <td className={isIncrease(data[4])?'text-green-600 px-5':'text-red-600 px-5'} > {data[4]}</td>
+                  <td className={isIncrease(data[5])?'text-green-600 px-5':'text-red-600 px-5'}> {data[5]}</td>
+                  <td className={isIncrease(data[6])?'text-green-600 px-5':'text-red-600 px-5'}> {data[6]}</td>
                   <td className="px-5"> {data[7]}</td>
                   <td className="px-5">
                     <div>{data[8]}</div>
