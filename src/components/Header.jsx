@@ -12,10 +12,14 @@ export default function Header() {
     useEffect(() => {
         asyncGetData()
         asyncSubData()
+        setTimeout(() => {
+            asyncGetDataETH()
+        }, 5000)
+    
 
         const listenData = StaticStore.appEvent.subscribe((msg) => {
             if (msg.type === eventList.UPDATE_MARKET_DATA) {
-                console.log("UPDATE_MARKET_DATA", msg, StaticStore.StructureData);
+                // console.log("UPDATE_MARKET_DATA", msg, StaticStore.StructureData);
                 // Thực hiện logic set lại dataTable
             }
         })
@@ -33,6 +37,18 @@ export default function Header() {
             })
         setDataCategories(data)
         console.log("data asyncGetData", data);
+
+    }
+    const asyncGetDataETH = async () => {
+        console.log("asyncGetDataETH");
+        const data = await methodCall({
+                method: "cmc_crypto_info",
+                params: ["ETH"]
+            })
+        StaticStore.SymbolInfo['ETH'].info = data.result
+        console.log("data After set ETH", StaticStore.SymbolInfo);
+        // setDataCategories(data)
+        // console.log("data asyncGetDataETH", data);
 
     }
     const asyncSubData = async () => {

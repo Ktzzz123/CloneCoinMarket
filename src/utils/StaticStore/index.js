@@ -65,6 +65,7 @@ class StaticStoreClass {
 
         // ------- Lưu trữ data
         this.StructureData = {}
+        this.SymbolInfo = {}
     }
 }
 
