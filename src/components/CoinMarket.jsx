@@ -3,10 +3,15 @@ import { data } from '../Data'
 import DetailsCoinPage from '../pages/DetailsCoinPage'
 import Link from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
-import { getSocket } from '../App'
-import { io } from 'socket.io-client'
 import StaticStore from '../utils/StaticStore'
 import { eventList } from '../utils/constants/eventLists'
+import numeral from 'numeral'
+import { subscribeServer } from '../utils/subcribe'
+import { methodCall } from '../utils/request'
+import { async } from 'rxjs'
+
+
+
 
 const rowConfig = [
     {
@@ -19,28 +24,73 @@ const rowConfig = [
         currency1: 'ETH',
         currency2: 'USDT',
     },
+    {
+        exchange: 'BINANCE',
+        currency1: 'LPT',
+        currency2: 'USDT',
+    },
+    {
+        exchange: 'BINANCE',
+        currency1: 'BNB',
+        currency2: 'USDT',
+    },
+    {
+        exchange: 'BINANCE',
+        currency1: 'BSW',
+        currency2: 'USDT',
+    }
 ]
+
+const listSymbol = ["BINANCE_SPOT_BTC_USDT",
+"BINANCE_SPOT_ETH_USDT",
+"COINBASE_SPOT_BTC_USDT",
+"COINBASE_SPOT_ETH_USDT",]
+
 
 const isIncrease = (num) => {
     if (num > 0) return true
     else return false
 }
 
+const numFormat = (number) =>{
+    return numeral(number).format('$0,0.00')
+}
 export default function CoinMarket(props) {
     const navigate = useNavigate()
     const dataTabRef = useRef([])
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            updateData()
-        }, 3000)
-        return () => {
-            clearInterval(interval)
+        console.log('useEffect')
+        let temp = []
+        for (var i = 0; i < rowConfig.length; i++){
+            console.log(rowConfig[i])
+            temp =  (temp.concat(`${rowConfig[i].exchange}_SPOT_${rowConfig[i].currency1}_${rowConfig[i].currency2}`));
         }
+        temp = JSON.stringify(temp)
+
+        console.log(temp);
+        asyncSubData(temp)
+        
     }, [])
+  
+    const asyncSubData = async (params) => {
+        // console.log('params',params)
+        console.log("asyncSubData");
+        const data = await subscribeServer({
+                method: "sub",
+                symbol_ids:[
+                    
+                    "BINANCE_SPOT_BTC_USDT",
+                    "BINANCE_SPOT_ETH_USDT",
+                    "BINANCE_SPOT_LPT_USDT",
+                    "BINANCE_SPOT_BNB_USDT",
+                    "BINANCE_SPOT_BSW_USDT",
+                    
+                ] 
+            })
+        // console.log("data asyncSubData", data);
 
-    const updateData = () => {}
-
+    }
     return (
         <div className='mx-6'>
             <div className='items-center flex'>
@@ -113,32 +163,78 @@ export default function CoinMarket(props) {
     )
 }
 
+const asyncGetDataCoin = async (symbol_id) => {
+    const data = await methodCall({
+            method: "cmc_crypto_info",
+            params: ["ETH"]
+        })
+        console.log("data",data)
+    // if(StaticStore.SymbolInfo['ETH'].info){
+
+    //     StaticStore.SymbolInfo['ETH'].info = data.result
+    // }
+    // StaticStore.SymbolInfo['ETH'].info = {}
+    // console.log("data After set ETH", StaticStore?.SymbolInfo);
+    // // setDataCategories(data)
+    // console.log("data asyncGetData", data);
+
+}
+const asyncGetData = async () => {
+    const data = await methodCall({
+            method: "cmc_crypto_category",
+            params: ["605e2ce9d41eae1066535f7c"]
+        })
+    // StaticStore.SymbolInfo = data
+    console.log('data',data)
+}
 const RowItem = ({ exchange, currency1, currency2, index }) => {
     const navigate = useNavigate()
     const [rowData, setRowData] = useState({})
 
     useEffect(() => {
-        const listenData = StaticStore.appEvent.subscribe((msg) => {
+        
+    // const coinInfo = Object.values(window.dataCategories.result.coins)
+        
+        const listenData = StaticStore.appEvent.subscribe( async(msg) => {
             if (msg.type === eventList.UPDATE_MARKET_DATA) {
                 const [exchangeSplit, tradeTypeSplit, currency1Split, currency2Split] = msg.symbol_id?.split('_')
+                if((JSON.stringify(StaticStore.SymbolInfo)) === {}){
+                    const data = await methodCall({
+                        method: "cmc_crypto_category",
+                        params: ["605e2ce9d41eae1066535f7c"]
+                    })
+                    console.log("data",data)
+                    StaticStore.SymbolInfo[currency1] = data.result
+                }
+                else{
+                    // console.log('co ton tai')
+                    console.log(StaticStore.SymbolInfo)
+                }
+                // console.log(StaticStore)
                 if (currency1Split) {
                     const dataRowTempt = {
                         ...StaticStore.StructureData[`${exchange}_SPOT_${currency1}_${currency2}`],
                         info: StaticStore.SymbolInfo[currency1] || {},
                     }
                     setRowData({ ...dataRowTempt })
+
                 }
+            
+
+                
 
                 // console.log("UPDATE_MARKET_DATA", msg, StaticStore.StructureData);
                 // Thực hiện logic set lại dataTable
+                // console.log("rowData",rowData)
             }
+
         })
         return () => {
             listenData.unsubscribe()
         }
     }, [currency1])
 
-    console.log('rowData ', currency1, rowData)
+    // console.log('rowData ', currency1, rowData)
 
     return (
         <tr
@@ -165,7 +261,11 @@ const RowItem = ({ exchange, currency1, currency2, index }) => {
 
             <td className='px-5'>
                 {' '}
-                <div>{rowData.trade.price}</div>
+                {
+                // console.log("rowData",rowData)
+
+                }
+                <div>{numFormat(rowData?.trade?.price)}</div>
             </td>
             {/* <td className={isIncrease(data[4]) ? 'text-green-600 px-5' : 'text-red-600 px-5'}> {data[4]}</td>
             <td className={isIncrease(data[5]) ? 'text-green-600 px-5' : 'text-red-600 px-5'}> {data[5]}</td>

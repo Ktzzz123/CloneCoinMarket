@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { eventList } from '../utils/constants/eventLists';
 import { methodCall } from '../utils/request';
 import StaticStore from '../utils/StaticStore';
-import { subcribeServer } from '../utils/subcribe';
+import { subscribeServer } from '../utils/subcribe';
 import Num from './header/Num'
 
 export default function Header() {
@@ -10,11 +10,11 @@ export default function Header() {
     const [dataTable, setdataTable] = useState([]);
 
     useEffect(() => {
-        asyncGetData()
+        // asyncGetData()
         asyncSubData()
         setTimeout(() => {
-            asyncGetDataETH()
-        }, 5000)
+            // asyncGetData()
+        }, 1000)
     
 
         const listenData = StaticStore.appEvent.subscribe((msg) => {
@@ -36,31 +36,27 @@ export default function Header() {
                 params: ["605e2ce9d41eae1066535f7c"]
             })
         setDataCategories(data)
-        console.log("data asyncGetData", data);
+        console.log(dataCategories);
 
     }
-    const asyncGetDataETH = async () => {
-        console.log("asyncGetDataETH");
-        const data = await methodCall({
-                method: "cmc_crypto_info",
-                params: ["ETH"]
-            })
-        StaticStore.SymbolInfo['ETH'].info = data.result
-        console.log("data After set ETH", StaticStore.SymbolInfo);
+    // const asyncGetDataETH = async () => {
+    //     const data = await methodCall({
+    //             method: "cmc_crypto_info",
+    //             params: ["ETH"]
+    //         })
+    //     StaticStore.SymbolInfo['ETH'].info = data.result
+    //     console.log("data After set ETH", StaticStore?.SymbolInfo);
         // setDataCategories(data)
         // console.log("data asyncGetDataETH", data);
 
-    }
+    // }
     const asyncSubData = async () => {
-        console.log("asyncSubData");
-        const data = await subcribeServer({
+        const data = await subscribeServer({
                 method: "sub",
-                params: ["FTX_SPOT_ETH_USDT"]
+                symbol_ids: ["FTX_SPOT_ETH_USDT"]
             })
-        console.log("data asyncSubData", data);
 
     }
-    console.log("dataCategories", dataCategories);
 
   return (
     <div className='bg-white'>
