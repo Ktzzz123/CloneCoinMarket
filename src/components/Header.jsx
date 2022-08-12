@@ -45,7 +45,8 @@ export default function Header() {
                 method: "cmc_crypto_info",
                 params: ["ETH"]
             })
-        StaticStore.SymbolInfo['ETH'].info = data.result
+        StaticStore.SymbolInfo['ETH'] = {}
+        StaticStore.SymbolInfo['ETH'] = data.result
         console.log("data After set ETH", StaticStore.SymbolInfo);
         // setDataCategories(data)
         // console.log("data asyncGetDataETH", data);

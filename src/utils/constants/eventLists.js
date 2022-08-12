@@ -3,7 +3,7 @@ export const eventList = {
     UPDATE_MARKET_DATA: 'UPDATE_MARKET_DATA',
 }
 
-export const sendChanels = {
+export const sendChannels = {
     SUB: 'sub',
     UNSUB: 'unsub',
     METHOD: 'method',

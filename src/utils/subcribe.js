@@ -1,4 +1,4 @@
-import { sendChanels } from './constants/eventLists'
+import { sendChannels } from './constants/eventLists'
 import StaticStore from './StaticStore'
 
 export const subcribeServer = async (subBody) => {
@@ -6,6 +6,7 @@ export const subcribeServer = async (subBody) => {
         const idRequest = StaticStore.getIdRequest()
         const subBodyExtends = { ...subBody, resolve, id: idRequest }
         StaticStore.requestMap.set(idRequest, subBodyExtends)
-        StaticStore.socketInstance.emit(sendChanels.SUB, { ...subBody, id: idRequest })
+        StaticStore.socketInstance.emit(sendChannels.SUB, { ...subBody, id: idRequest })
     })
 }
+
