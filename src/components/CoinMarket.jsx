@@ -40,6 +40,7 @@ const rowConfig = [
         currency2: 'USDT',
     }
 ]
+const listSymbolInfo = ['BTC', 'ETH', 'LPT', 'BNB', 'BSW']
 
 const listSymbol = ["BINANCE_SPOT_BTC_USDT",
 "BINANCE_SPOT_ETH_USDT",
@@ -88,9 +89,24 @@ export default function CoinMarket(props) {
                     
                 ] 
             })
-        // console.log("data asyncSubData", data);
-
     }
+    useEffect(() => {
+        const asyncGetDataCoin = async (symbol_id) => {
+            const data = await methodCall({
+                method: 'cmc_crypto_info',
+                params: [symbol_id],
+            })
+            console.log('asyncGetDataCoin',symbol_id, data)
+            StaticStore.SymbolInfo[symbol_id] = data.result
+        }
+        
+        listSymbolInfo.forEach((symbol_id) => {
+            asyncGetDataCoin(symbol_id)
+        })
+    }, []);
+    
+
+
     return (
         <div className='mx-6'>
             <div className='items-center flex'>
@@ -163,29 +179,12 @@ export default function CoinMarket(props) {
     )
 }
 
-const asyncGetDataCoin = async (symbol_id) => {
-    const data = await methodCall({
-            method: "cmc_crypto_info",
-            params: ["ETH"]
-        })
-        console.log("data",data)
-    // if(StaticStore.SymbolInfo['ETH'].info){
 
-    //     StaticStore.SymbolInfo['ETH'].info = data.result
-    // }
-    // StaticStore.SymbolInfo['ETH'].info = {}
-    // console.log("data After set ETH", StaticStore?.SymbolInfo);
-    // // setDataCategories(data)
-    // console.log("data asyncGetData", data);
-
-}
 const asyncGetData = async () => {
     const data = await methodCall({
             method: "cmc_crypto_category",
             params: ["605e2ce9d41eae1066535f7c"]
         })
-    // StaticStore.SymbolInfo = data
-    console.log('data',data)
 }
 const RowItem = ({ exchange, currency1, currency2, index }) => {
     const navigate = useNavigate()
@@ -198,18 +197,6 @@ const RowItem = ({ exchange, currency1, currency2, index }) => {
         const listenData = StaticStore.appEvent.subscribe( async(msg) => {
             if (msg.type === eventList.UPDATE_MARKET_DATA) {
                 const [exchangeSplit, tradeTypeSplit, currency1Split, currency2Split] = msg.symbol_id?.split('_')
-                if((JSON.stringify(StaticStore.SymbolInfo)) === {}){
-                    const data = await methodCall({
-                        method: "cmc_crypto_category",
-                        params: ["605e2ce9d41eae1066535f7c"]
-                    })
-                    console.log("data",data)
-                    StaticStore.SymbolInfo[currency1] = data.result
-                }
-                else{
-                    // console.log('co ton tai')
-                    console.log(StaticStore.SymbolInfo)
-                }
                 // console.log(StaticStore)
                 if (currency1Split) {
                     const dataRowTempt = {
@@ -219,10 +206,6 @@ const RowItem = ({ exchange, currency1, currency2, index }) => {
                     setRowData({ ...dataRowTempt })
 
                 }
-            
-
-                
-
                 // console.log("UPDATE_MARKET_DATA", msg, StaticStore.StructureData);
                 // Thực hiện logic set lại dataTable
                 // console.log("rowData",rowData)
