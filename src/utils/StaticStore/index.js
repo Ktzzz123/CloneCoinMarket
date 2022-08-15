@@ -11,7 +11,7 @@ class StaticStoreClass {
         this.getIdRequest = () => {
             return this.idRequest++
         }
-        this.socketInstance = io('http://localhost:2022', {
+        this.socketInstance = io('http://io.nvdise.space', {
             timeout: 2000,
             secure: true,
             reconnection: false,

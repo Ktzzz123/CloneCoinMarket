@@ -8,7 +8,6 @@ import { eventList } from "../utils/constants/eventLists";
 import numeral from "numeral";
 import { subscribeServer } from "../utils/subcribe";
 import { methodCall } from "../utils/request";
-import { async } from "rxjs";
 
 const rowConfig = [
   {
@@ -39,13 +38,6 @@ const rowConfig = [
 ];
 const listSymbolInfo = ["BTC", "ETH", "LPT", "BNB", "BSW"];
 
-const listSymbol = [
-  "BINANCE_SPOT_BTC_USDT",
-  "BINANCE_SPOT_ETH_USDT",
-  "COINBASE_SPOT_BTC_USDT",
-  "COINBASE_SPOT_ETH_USDT",
-];
-
 
 const numFormat = (number) => {
   return numeral(number).format("$0,0.00");
@@ -55,6 +47,7 @@ export default function CoinMarket(props) {
   const dataTabRef = useRef([]);
 
   useEffect(() => {
+    console.log("useEffect");
     let temp = [];
     for (var i = 0; i < rowConfig.length; i++) {
       console.log(rowConfig[i]);
@@ -64,10 +57,10 @@ export default function CoinMarket(props) {
     }
     temp = JSON.stringify(temp);
 
-    asyncSubData(temp);
-  }, []);
-
-  const asyncSubData = async (params) => {
+    asyncSubData();
+  }, []); // run the first time and just run when there are a change in rowConfig
+  
+  const asyncSubData = async () => {
     // console.log('params',params)
     console.log("asyncSubData");
     const data = await subscribeServer({
@@ -160,7 +153,7 @@ export default function CoinMarket(props) {
             <th className="text-right w-16"></th>
             <th className="text-center  w-16">#</th>
             <th className="text-left w-80">Name</th>
-            <th className="text-right w-36">Price</th>
+            <th className="text-right w-44">Price</th>
             <th className="text-right w-28">1h %</th>
             <th className="text-right w-28">12h %</th>
             <th className="text-right w-28">24h %</th>
@@ -192,6 +185,7 @@ export default function CoinMarket(props) {
 const RowItem = ({ exchange, currency1, currency2, index }) => {
   const navigate = useNavigate();
   const [rowData, setRowData] = useState({});
+  const [tempData, setTempData] = useState({})
   
   
   useEffect(() => {
@@ -212,25 +206,26 @@ const RowItem = ({ exchange, currency1, currency2, index }) => {
 
           setRowData({ ...dataRowTempt });
         }
-        console.log(rowData)
         // console.log("UPDATE_MARKET_DATA", msg, StaticStore.StructureData);
         // Thực hiện logic set lại dataTable
-        // console.log("rowData",rowData)
+        console.log(StaticStore)
       }
     });
+    
     return () => {
       listenData.unsubscribe();
     };
   }, [currency1]);
 
 
-  console.log(rowData)
+  // console.log(rowData)
 const redOrGreen = (num)=>{
   if(num>0) return "text-green-600"
   if(num<0) return "text-red-600"
-  if(num===0) return "text-yellow-600"
+  if(num===0) return "text-yellow-500"
 }
   return (
+    
     <tr
       key={String(index)}
       className="items-center text-right cursor-pointer"
@@ -238,6 +233,10 @@ const redOrGreen = (num)=>{
         navigate("coin/" + currency1);
       }}
     >
+      {
+      console.log("rowData",rowData)
+
+      }
       <td className="px-5">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -294,13 +293,13 @@ const redOrGreen = (num)=>{
       }
       </td>
       <td>
-
+      chưa có data
       </td>
       <td>
-
+          chưa có data
       </td>
       <td>
-
+      chưa có data
       </td>
       <td>
         <img src="https://s3.coinmarketcap.com/generated/sparklines/web/7d/2781/1027.svg" alt="image"/>
