@@ -1,23 +1,63 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import InfoContent from "../components/detailPage/InfoContent";
-import { data } from "../Data";
+import { methodCall } from "../utils/request";
+import StaticStore from "../utils/StaticStore/index";
 
 export default function DetailsCoinPage() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [coin, setCoin] = useState([]);
-  useEffect(() => {
-    if (id) {
-      data.forEach((c) => {
-        if (c[1] === id) {
-          setCoin(c);
-          // console.log(coin);
-        }
-      });
-    }
-  }, [id, coin]);
+  const [coin, setCoin] = useState({});
+  const listSymbolInfo = ["BTC", "ETH", "LPT", "BNB", "BSW"];
+  const [toggle, setToggle] = useState(false)
 
+  const asyncGetDataCoin = async (symbol_id) => {
+    const data = await methodCall({
+      method: "cmc_crypto_info",
+      params: [symbol_id],
+    });
+    StaticStore.SymbolInfo[symbol_id] = data.result;
+    console.log("lay data coin",StaticStore.SymbolInfo);
+    setToggle(true)
+    console.log("gan du lieu cho coin");
+    console.log(StaticStore.SymbolInfo)
+    for (var i in StaticStore.SymbolInfo) {
+      console.log(i)
+      if (i === id) {
+        console.log(i)
+        setCoin(StaticStore.SymbolInfo[i])
+      }
+      else{
+        console.log('false')
+      }
+    }
+  };
+
+
+  useEffect(() => {
+    var isEmptyObj = Object.keys(StaticStore.SymbolInfo).length;
+    if (isEmptyObj) {
+      console.log("da co data");
+      for (var i in StaticStore.SymbolInfo) {
+        console.log(i)
+        if (i === id) {
+          console.log(i)
+          setCoin(StaticStore.SymbolInfo[i])
+        }
+        else{
+          console.log('false')
+        }
+      }
+
+    } else {
+      console.log("chua co data");
+      listSymbolInfo.forEach((symbol_id) =>  asyncGetDataCoin(symbol_id)
+      )
+
+    }
+    console.log(StaticStore);
+  }, []);
+  
   return (
     <div>
       <div>
@@ -40,14 +80,29 @@ export default function DetailsCoinPage() {
             Coins
           </div>
           <div className="mx-5">/</div>
-          <div>{id}</div>
+          <div>{coin.symbol}</div>
         </div>
 
         {/* coin info */}
-            <InfoContent coin = {coin}/>
+        <div className="my-4 border-solid border-2 border-red-400">
+
+        <InfoContent coin={coin} />
+        </div>
         {/*Coin data and community */}
 
-        <div className="flex">
+        <div>
+        <div>
+          <ul className="flex py-10 border-solid border-y border-slate-400">
+            <li className="px-5 mx-5 flex h-12 bg-blue-600 text-white rounded-xl content-center font-bold hover:bg-blue-700 items-center text-center">Overview</li>
+            <li className="px-5 mx-5 flex h-12 rounded-xl content-center font-bold hover:bg-slate-400 items-center text-center">Markets</li>
+            <li className="px-5 mx-5 flex h-12 rounded-xl content-center font-bold hover:bg-slate-400 items-center text-center">Historical Data</li>
+            <li className="px-5 mx-5 flex h-12 rounded-xl content-center font-bold hover:bg-slate-400 items-center text-center">News</li>
+            <li className="px-5 mx-5 flex h-12 rounded-xl content-center font-bold hover:bg-slate-400 items-center text-center">Price Estimates</li>
+            <li className="px-5 mx-5 flex h-12 rounded-xl content-center font-bold hover:bg-slate-400 items-center text-center">More Info</li>
+
+          </ul>
+        </div>
+        <div className="flex border-solid border-2 border-yellow-400">
           <div className="w-2/3 border-solid border-2 border-indigo-600 mr-5">
             <div>chart</div>
             <div>Infor</div>
@@ -64,6 +119,8 @@ export default function DetailsCoinPage() {
             <div>Trending Coin and Tokens</div>
             <div></div>
           </div>
+
+        </div>
         </div>
 
         {/* coin's market*/}

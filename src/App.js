@@ -1,12 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import AdvertiseSubscribeBanner from './components/AdvertiseSubscribeBanner';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import DetailsCoinPage from './pages/DetailsCoinPage';
 import Homepage from './pages/Homepage';
 import io from 'socket.io-client'
 import { useEffect } from 'react';
+import AdvertiseSubscribeBanner from './components/homePage/AdvertiseSubscribeBanner';
 
 
 

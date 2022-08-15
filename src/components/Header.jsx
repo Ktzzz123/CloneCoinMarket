@@ -30,13 +30,13 @@ export default function Header() {
     }, []);
 
     const asyncGetData = async () => {
-        console.log("asyncGetData");
+        // console.log("asyncGetData");
         const data = await methodCall({
                 method: "cmc_crypto_category",
                 params: ["605e2ce9d41eae1066535f7c"]
             })
         setDataCategories(data)
-        console.log(dataCategories);
+        // console.log(dataCategories);
 
     }
     // const asyncGetDataETH = async () => {

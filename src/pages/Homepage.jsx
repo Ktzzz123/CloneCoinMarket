@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { getSocket } from '../App';
-import AdvertiseBar from '../components/AdvertiseBar';
-import CoinMarket from '../components/CoinMarket';
-import TodayCoinBar from '../components/TodayCoinBar';
+import AdvertiseBar from '../components/homePage/AdvertiseBar';
+import CoinMarket from '../components/homePage/CoinMarket';
+import TodayCoinBar from '../components/homePage/TodayCoinBar';
 
 
 function Homepage(props) {
