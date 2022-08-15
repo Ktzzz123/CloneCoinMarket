@@ -10,33 +10,26 @@ export default function TodayCoinBar() {
   const content = 1.07;
   const percent = 0.27
   // console.log(StaticStore)
-  const [listCoin,setListCoin] = useState([
-    
-
-  ]);
+  const trendingCoin = [
+    {symbol:'BTC'},
+    {symbol:'ADA'},
+    {symbol:'DOGE'}
+  ]
+  const [listCoin,setListCoin] = useState(trendingCoin);
   
 
-  let listTrendingSymbol = ['BTC','ADA','DOGE']
-  // class ListCoin  {
-  //   'BTC' = {}
-  //   'ADA' = {}
-  //   'DOGE' = {}
-  // }
-
+ 
   useEffect(()=>{
-    console.log('SymbolInfo',StaticStore.SymbolInfo)
-    if(listCoin.length === 0){
-      console.log('true')
-      listTrendingSymbol.map((symbol) => {
-        Object.values(StaticStore.SymbolInfo).map((s)=>{
-          console.log(s)
-        })
+   setInterval(()=>{
+      let temp = []
+      const listData = listCoin.map((symb) => {
+        // console.log(listCoin)
+        // console.log( StaticStore.SymbolInfo[symb?.symbol])
+        temp = temp.concat(  StaticStore.SymbolInfo[symb?.symbol])
       })
-      
-      
-    }else{
-      console.log('false')
-    }
+      // console.log(temp)
+      setListCoin(temp  )
+    },2000)
     // console.log(listCoin)
   },[])
   return (
@@ -45,22 +38,8 @@ export default function TodayCoinBar() {
       <div>The global crypto market cap is ${content}, a {percent}% increase over the last day. </div>
       <a>Read more</a>
       <div className='flex'>
+      <Card listCoin = {listCoin}/>
       
-      <Card 
-      
-      />
-      <Card img = 'https://s2.coinmarketcap.com/static/cloud/img/TrendingIcon.png?_=309fd9c' header = 'Trending' 
-      name1='optimism' name2 = 'PancakeSwap' name3 = 'Saudi Shiba Inu' nameTag1 ='OP' nameTag2='CAKE' nameTag3='SAUDISHIB'
-      percent1='17.07' percent2='2.40' percent3='175.25' img1='	https://s2.coinmarketcap.com/static/img/coins/64x64/11840.png'
-      img2 = 'https://s2.coinmarketcap.com/static/img/coins/64x64/7186.png' img3='	https://s2.coinmarketcap.com/static/img/coins/64x64/21061.png'
-      
-      />
-      <Card img = 'https://s2.coinmarketcap.com/static/cloud/img/TrendingIcon.png?_=309fd9c' header = 'Trending' 
-      name1='optimism' name2 = 'PancakeSwap' name3 = 'Saudi Shiba Inu' nameTag1 ='OP' nameTag2='CAKE' nameTag3='SAUDISHIB'
-      percent1='17.07' percent2='2.40' percent3='175.25' img1='	https://s2.coinmarketcap.com/static/img/coins/64x64/11840.png'
-      img2 = 'https://s2.coinmarketcap.com/static/img/coins/64x64/7186.png' img3='	https://s2.coinmarketcap.com/static/img/coins/64x64/21061.png'
-      
-      />
       
       </div>
     </div>

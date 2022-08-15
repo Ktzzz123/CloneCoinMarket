@@ -16,7 +16,6 @@ export const RowItem = ({ exchange, currency1, currency2, index }) => {
       if (msg.type === eventList.UPDATE_MARKET_DATA) {
         const [exchangeSplit, tradeTypeSplit, currency1Split, currency2Split] =
           msg.symbol_id?.split("_");
-        // console.log(StaticStore)
         if (currency1Split) {
           const dataRowTempt = {
             ...StaticStore.StructureData[
