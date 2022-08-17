@@ -7,19 +7,17 @@ import Num from "./header/Num";
 
 export default function Header() {
   const [dataCategories, setDataCategories] = useState();
+  const [rowData, setRowData]= useState()
   const [active1, setActive1] = useState(0);
-
   useEffect(() => {
     // asyncGetData()
-    asyncSubData();
     setTimeout(() => {
-      // asyncGetData()
+      asyncGetData()
     }, 1000);
 
     const listenData = StaticStore.appEvent.subscribe((msg) => {
-      if (msg.type === eventList.UPDATE_MARKET_DATA) {
-        // console.log("UPDATE_MARKET_DATA", msg, StaticStore.StructureData);
-        // Thực hiện logic set lại dataTable
+      if (msg.type === eventList.UPDATE_MARKET_DATA) {  
+        // console.log("UPDATE_MARKET_DATA", msg, StaticStore.StructureData)
       }
     });
     return () => {
@@ -28,21 +26,26 @@ export default function Header() {
   }, []);
 
   const asyncGetData = async () => {
-    // console.log("asyncGetData");
     const data = await methodCall({
       method: "cmc_crypto_category",
       params: ["605e2ce9d41eae1066535f7c"],
     });
-    setDataCategories(data);
-    // console.log(dataCategories);
+   if(data){
+    setDataCategories(Object.values(data.result.coins))
+    // console.log(data)
+    // console.log(Object.values(data.result.coins))
+    console.log('sau khi set',dataCategories)
+   }
+   else{
+    console.log('chua co data')
+   }
   };
+  useEffect(()=>{
+    console.log('in useEffect',dataCategories)
+    
+  },[dataCategories])
 
-  const asyncSubData = async () => {
-    const data = await subscribeServer({
-      method: "sub",
-      symbol_ids: ["FTX_SPOT_ETH_USDT"],
-    });
-  };
+
 
   return (
     <div className="bg-white">
@@ -139,32 +142,32 @@ export default function Header() {
                         </div>
                         <div className="mt-5">
                           <div className="flex hover:bg-slate-200 items-center p-3 rounded-xl font-bold ">
-                            <i class="bg-blue-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-currency-bitcoin"></i>
+                            <i className="bg-blue-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-currency-bitcoin"></i>
                             <div>Ranking</div>
                           </div>
                           <div className="flex hover:bg-slate-200 items-center p-3 rounded-xl font-bold ">
-                            <i class="bg-blue-800 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-file-earmark-plus-fill"></i>
+                            <i className="bg-blue-800 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-file-earmark-plus-fill"></i>
                             <div>Recently Added</div>
                           </div>
                           <div className="flex hover:bg-slate-200 items-center p-3 rounded-xl font-bold ">
-                            <i class="bg-orange-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-list-ul"></i>
+                            <i classNameName="bg-orange-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-list-ul"></i>
 
                             <div>Categories</div>
                           </div>
                           <div className="flex hover:bg-slate-200 items-center p-3 rounded-xl font-bold ">
-                            <i class="bg-violet-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-stars"></i>
+                            <i classNameName="bg-violet-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-stars"></i>
                             <div>Spotlight</div>
                           </div>
                           <div className="flex hover:bg-slate-200 items-center p-3 rounded-xl font-bold ">
-                            <i class="bg-emerald-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-graph-up-arrow"></i>
+                            <i className="bg-emerald-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-graph-up-arrow"></i>
                             <div>Gainers &amp; Losers</div>
                           </div>
                           <div className="flex hover:bg-slate-200 items-center p-3 rounded-xl font-bold ">
-                            <i class="bg-cyan-400 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-globe"></i>
+                            <i className="bg-cyan-400 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-globe"></i>
                             <div>Global Charts</div>
                           </div>
                           <div className="flex hover:bg-slate-200 items-center p-3 rounded-xl font-bold ">
-                            <i class="bg-blue-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-clock-history"></i>
+                            <i className="bg-blue-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-clock-history"></i>
                             <div>Historical Snapshots</div>
                           </div>
                         </div>
@@ -177,7 +180,7 @@ export default function Header() {
                             <div>Price Estimates</div>
                           </div>
                           <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                            <i class="bg-slate-100 text-slate-700 mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-calendar-minus-fill"></i>
+                            <i className="bg-slate-100 text-slate-700 mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-calendar-minus-fill"></i>
                             <div>Polkadot Parachains </div>
                           </div>
                           <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
@@ -198,15 +201,15 @@ export default function Header() {
                         </div>
                         <div className="mt-5">
                           <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                            <i class="bg-blue-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-circle"></i>
+                            <i className="bg-blue-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-circle"></i>
                             <div>Overall NFT Stats</div>
                           </div>
                           <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                            <i class="bg-orange-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-image-fill"></i>
+                            <i className="bg-orange-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-image-fill"></i>
                             <div>Top Collections</div>
                           </div>
                           <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                            <i class="bg-teal-400 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-calendar-fill"></i>
+                            <i className="bg-teal-400 text-white mr-5 text-center p-2 rounded-full w-12 h-12  bi bi-calendar-fill"></i>
                             <div>Upcoming sales</div>
                           </div>
                         </div>
@@ -249,15 +252,15 @@ export default function Header() {
                 >
                   <div className="m-5">
                     <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                      <i class="bg-teal-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-diamond-fill"></i>
+                      <i className="bg-teal-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-diamond-fill"></i>
                       <div>Spot</div>
                     </div>
                     <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                      <i class="bg-blue-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-caret-up-fill"></i>
+                      <i className="bg-blue-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-caret-up-fill"></i>
                       <div>Derivatives</div>
                     </div>
                     <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                      <i class="bg-teal-900 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-x-diamond-fill"></i>
+                      <i className="bg-teal-900 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-x-diamond-fill"></i>
                       <div>DEX</div>
                     </div>
                   </div>
@@ -296,11 +299,11 @@ export default function Header() {
                 >
                   <div className="m-5">
                     <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                      <i class="bg-blue-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-rss-fill"></i>
+                      <i className="bg-blue-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-rss-fill"></i>
                       <div>Feeds</div>
                     </div>
                     <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                      <i class="bg-violet-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-file-earmark-text-fill"></i>
+                      <i className="bg-violet-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-file-earmark-text-fill"></i>
                       <div>Articles</div>
                     </div>
                   </div>
@@ -344,33 +347,33 @@ export default function Header() {
                     <div>
                       <div>
                         <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                          <i class="bg-violet-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-arrow-left-right"></i>
+                          <i className="bg-violet-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-arrow-left-right"></i>
                           <div>Converter</div>
                         </div>
                         <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                          <i class="bg-blue-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-phone-fill"></i>
+                          <i className="bg-blue-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-phone-fill"></i>
                           <div>Mobile Apps</div>
-                          <i class="ml-5 text-slate-500 text-lg cursor-pointer bi bi-box-arrow-up-right"></i>
+                          <i className="ml-5 text-slate-500 text-lg cursor-pointer bi bi-box-arrow-up-right"></i>
                         </div>
                         <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                          <i class="bg-green-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-search"></i>
+                          <i className="bg-green-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-search"></i>
                           <div>Blockchain Explorer</div>
-                          <i class="ml-5 text-slate-500 text-lg cursor-pointer bi bi-box-arrow-up-right"></i>
+                          <i className="ml-5 text-slate-500 text-lg cursor-pointer bi bi-box-arrow-up-right"></i>
                         </div>
                         <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                          <i class="bg-amber-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-briefcase-fill"></i>
+                          <i className="bg-amber-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-briefcase-fill"></i>
                           <div>Jobs Board</div>
-                          <i class="ml-5 text-slate-500 text-lg cursor-pointer bi bi-box-arrow-up-right"></i>
+                          <i className="ml-5 text-slate-500 text-lg cursor-pointer bi bi-box-arrow-up-right"></i>
                         </div>
                       </div>
                       <div className="my-5 border-t-2 border-slate-200">
                         <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                          <i class="bg-slate-100 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-code-slash"></i>
+                          <i className="bg-slate-100 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-code-slash"></i>
                           <div>Crypto API</div>
-                          <i class="ml-5 text-slate-500 text-lg cursor-pointer bi bi-box-arrow-up-right"></i>
+                          <i className="ml-5 text-slate-500 text-lg cursor-pointer bi bi-box-arrow-up-right"></i>
                         </div>
                         <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                          <i class="bg-slate-100 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-microsoft"></i>
+                          <i className="bg-slate-100 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-microsoft"></i>
                           <div>Site Widgets</div>
                         </div>
                       </div>
@@ -382,21 +385,21 @@ export default function Header() {
                     </div>
                     <div>
                       <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                        <i class="bg-green-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-calendar-minus-fill"></i>
+                        <i className="bg-green-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-calendar-minus-fill"></i>
                         <div>Free Airdrops</div>
                       </div>
                       <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                        <i class="bg-amber-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-gift-fill"></i>
+                        <i className="bg-amber-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-gift-fill"></i>
                         <div>Diamond Rewards</div>
                       </div>
                       <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                        <i class="bg-blue-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-cpu-fill"></i>
+                        <i className="bg-blue-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-cpu-fill"></i>
                         <div>Referral Program</div>
                       </div>
                       <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                        <i class="bg-teal-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-coin"></i>
+                        <i className="bg-teal-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-coin"></i>
                         <div>Learn &amp; Earn</div>
-                        <i class="ml-5 text-slate-500 text-lg cursor-pointer bi bi-box-arrow-up-right"></i>
+                        <i className="ml-5 text-slate-500 text-lg cursor-pointer bi bi-box-arrow-up-right"></i>
                       </div>
                     </div>
                   </div>
@@ -407,11 +410,11 @@ export default function Header() {
                     </div>
                     <div>
                       <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                        <i class="bg-teal-300 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-calendar2-fill"></i>
+                        <i className="bg-teal-300 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-calendar2-fill"></i>
                         <div>ICO Calendar</div>
                       </div>
                       <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                        <i class="bg-blue-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-calendar2-fill"></i>
+                        <i className="bg-blue-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-calendar2-fill"></i>
                         <div>Events Calendar</div>
                       </div>
                     </div>
@@ -452,41 +455,41 @@ export default function Header() {
                   <div className="m-5">
                     <div className="p-5">
                       <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                        <i class="bg-blue-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-square-fill"></i>
+                        <i className="bg-blue-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-square-fill"></i>
                         <div>Alexandria</div>
                       </div>
                       <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                        <i class="bg-blue-900 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-newspaper"></i>
+                        <i className="bg-blue-900 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-newspaper"></i>
                         <div>News</div>
                       </div>
                       <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                        <i class="bg-orange-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-people-fill"></i>
+                        <i className="bg-orange-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-people-fill"></i>
                         <div>Conference</div>
                       </div>
                       <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                        <i class="bg-red-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-play-fill"></i>
+                        <i className="bg-red-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-play-fill"></i>
                         <div>Videos</div>
                       </div>
                       <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                        <i class="bg-violet-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-megaphone-fill"></i>
+                        <i className="bg-violet-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-megaphone-fill"></i>
                         <div>Market Updates</div>
                       </div>
                       <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                        <i class="bg-blue-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-book-fill"></i>
+                        <i className="bg-blue-600 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-book-fill"></i>
                         <div>Glossary</div>
                       </div>
                       <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                        <i class="bg-green-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-cash"></i>
+                        <i className="bg-green-500 text-white mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-cash"></i>
                         <div>Where to Buy</div>
                       </div>
                     </div>
                     <div className="border-t-2 border-slate-200 mt-2 p-5">
                       <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                        <i class="bg-slate-200 text-slate-700 mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-envelope-fill"></i>
+                        <i className="bg-slate-200 text-slate-700 mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-envelope-fill"></i>
                         <div>Newsletters</div>
                       </div>
                       <div className="flex items-center p-2 hover:bg-slate-200 rounded-xl font-bold">
-                        <i class="bg-slate-200 text-slate-700 mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-lightbulb-fill"></i>
+                        <i className="bg-slate-200 text-slate-700 mr-5 text-center p-2 rounded-full w-12 h-12 bi bi-lightbulb-fill"></i>
                         <div>Methodology</div>
                       </div>
                     </div>
@@ -547,17 +550,25 @@ export default function Header() {
                 <div className="m-5">
 
               <div className="flex justify-between ">
-                <i class="mx-2 bi bi-search"></i>
+                <i className="mx-2 bi bi-search"></i>
                 <input
                   className="w-full focus:outline-none "
                   type="text"
                   placeholder="Search coin, pair, contract address or exchange"
                   maxLength={200}
                 ></input>
-                <i class="mx-2 bi bi-x-circle cursor-pointer"></i>
+                <i className="mx-2 bi bi-x-circle cursor-pointer"></i>
               </div>
-              <div>trending</div>
-              <div>recent</div>
+              <div className="my-5">
+                <div className="flex">
+                  <div>Trending</div>
+                  <i className="bi bi-fire text-orange-600"></i>
+                </div>
+                <div>Container</div>
+              </div>
+              <div>
+
+              </div>
                 </div>
             </div>
           </div>

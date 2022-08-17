@@ -8,7 +8,7 @@ export const methodCall = async (requestBody = { method: '', params: ''}) => {
         const idRequest = StaticStore.getIdRequest()
         const requestBodyExtends = { ...requestBody, resolve, id: idRequest }
         StaticStore.requestMap.set(idRequest, requestBodyExtends)
-        console.log("call", [idRequest, requestBody]);
+        // console.log("call", [idRequest, requestBody]);
         StaticStore.socketInstance.emit(sendChanels.METHOD, { ...requestBody, id: idRequest })
     })
 }

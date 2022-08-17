@@ -9,7 +9,7 @@ export default function ItemCard({ coin }) {
 
   return (
     <div className="cursor-pointer flex justify-between py-5">
-      {console.log(coin)}
+      {/* {console.log(coin)} */}
       <div className="flex">
         <div className="px-5">{coin?.data?.info?.id}</div>
         <img

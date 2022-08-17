@@ -4,6 +4,7 @@ import StaticStore from "../../../utils/StaticStore/index";
 import { methodCall } from "../../../utils/request";
 import { eventList } from "../../../utils/constants/eventLists";
 import cloneDeep from "lodash.clonedeep";
+import { data } from "autoprefixer";
 
 export default function Card({ listCoin = [] }) {
   const [dataCoin, setDataCoin] = useState(listCoin);
@@ -67,8 +68,6 @@ export default function Card({ listCoin = [] }) {
           msg.symbol_id?.split("_");
           listCoin.map((coin)=>{
             if (currency1Split===coin.symbol) {
-              // console.log(true)
-
               const dataRowTempt = {
                 ...StaticStore.StructureData[
                   `BINANCE_SPOT_${currency1Split}_USDT`
@@ -76,9 +75,7 @@ export default function Card({ listCoin = [] }) {
                 info: StaticStore.SymbolInfo[currency1Split]
               };
               setTemp({ ...dataRowTempt });
-              // console.log(dataRowTempt)
-              // console.log('gan data coin')
-              // console.log(temp);
+              
             }
           })
         
@@ -107,8 +104,8 @@ export default function Card({ listCoin = [] }) {
 
     setDataCoin([...listCoin])
     // console.log(temp)
-    console.log(dataCoin)
-    console.log(typeof(dataCoin))
+    // console.log(dataCoin)
+    // console.log(typeof(dataCoin));
   }, [temp]);
 
   return (
