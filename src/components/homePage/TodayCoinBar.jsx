@@ -23,6 +23,7 @@ export default function TodayCoinBar() {
         //     setListCoin(temp)
         // }, 2000)
         // console.log(listCoin)
+        // console.log(StaticStore)
     }, [])
     
     return (
