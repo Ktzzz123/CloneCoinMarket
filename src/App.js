@@ -28,7 +28,6 @@ function App() {
     socket.on('connect',()=>{
       console.log(socket);
     })
-    
   })
   
 

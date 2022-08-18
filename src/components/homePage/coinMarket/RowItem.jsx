@@ -27,7 +27,7 @@ export const RowItem = ({ exchange, currency1, currency2, index }) => {
           // console.log('gan data coin')
         }
         
-        console.log("UPDATE_MARKET_DATA", msg, StaticStore.StructureData);
+        // console.log("UPDATE_MARKET_DATA", msg, StaticStore.StructureData);
         // Thực hiện logic set lại dataTable
         // console.log(rowData);
       }
