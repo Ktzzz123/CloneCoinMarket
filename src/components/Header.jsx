@@ -67,8 +67,8 @@ export default function Header() {
     // console.log(rowData);
   }, [dataCategories]);
   return (
-    <div className="bg-white">
-      <div className="bg-white flex justify-between">
+    <div className="bg-white ">
+      <div className="bg-white flex justify-between px-32 ">
         <div className="flex items-center">
           <div className="flex text-xl mr-10">
             Cryptos: <Num content="20.240" />
@@ -112,11 +112,11 @@ export default function Header() {
           </button>
         </div>
       </div>
-      <div className="bg-slate-300  h-px" />
+      <div className="bg-slate-100  h-px" />
 
       {/* second header */}
 
-      <div className="relative flex justify-between  py-4 px-8 h-28    ">
+      <div className="relative flex justify-between  py-4 h-28 px-32   ">
         <div className="flex ">
           <img
             className="w-72"

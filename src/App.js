@@ -33,8 +33,8 @@ function App() {
 
   return (
     <div className='bg-slate-50 h-screen'>
-      <div className='mx-11'>
         <Header/>
+      <div className='px-32 bg-slate-50'>
       <body className='bg-slate-50'>
       <div className='m-auto'>
         <Routes>

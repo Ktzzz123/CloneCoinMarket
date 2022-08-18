@@ -89,56 +89,42 @@ export default function CoinMarket(props) {
       <div className="items-center flex">
         <div className="flex items-center bg-slate-200 rounded-xl p-2 m-2">
           <i className="bi bi-star"></i>
-          <div className="px-2">Watchlist</div>
+          <div className="px-2 text-xl">Watchlist</div>
         </div>
         <div className="flex items-center  bg-slate-200 rounded-xl p-2 m-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="16px"
-            width="16px"
-            viewBox="0 0 24 24"
-            className="sc-1prm8qw-0 eFjnQR"
-          >
-            <path
-              d="M13.8182 2H13V11H22V10.1818C22 5.68182 18.3182 2 13.8182 2Z"
-              fill="#A6B0C3"
-            ></path>
-            <path
-              d="M11.35 5H10.5C5.825 5 2 8.825 2 13.5C2 18.175 5.825 22 10.5 22C15.175 22 19 18.175 19 13.5V12.65H11.35V5Z"
-              fill="#A6B0C3"
-            ></path>
-          </svg>
-          <div className="px-2">Portfolio</div>
+        <i class="bi bi-box-fill"></i>
+          <div className=" text-xl px-2">Portfolio</div>
         </div>
-        <div className="items-center px-5 bg-blue-100 justify-center text-blue-700 font-bold h-10 rounded-xl">
+        <div className="h-10 w-px bg-slate-400 mx-2"></div>
+        <div className=" text-xl items-center py-6 px-5 bg-blue-100 flex justify-center text-blue-700 font-bold h-10 rounded-xl">
           Cryptocurrencies
         </div>
-        <div className="px-5 font-normal cursor-pointer">Categories</div>
-        <div className="px-5 font-normal cursor-pointer">DeFi</div>
-        <div className="px-5 font-normal cursor-pointer">NFT</div>
-        <div className="px-5 font-normal cursor-pointer">Metaverse</div>
-        <div className="px-5 font-normal cursor-pointer">Polkadot</div>
-        <div className="px-5 font-normal cursor-pointer">BNB chain</div>
-        <div className="px-5 font-normal cursor-pointer">Solana</div>
-        <div className="px-5 font-normal cursor-pointer">Avalanche</div>
-        <div className="px-5 font-normal cursor-pointer text-lg text-slate-600 ">
+        <div className=" text-xl px-5 font-normal cursor-pointer">Categories</div>
+        <div className=" text-xl px-5 font-normal cursor-pointer">DeFi</div>
+        <div className=" text-xl px-5 font-normal cursor-pointer">NFT</div>
+        <div className=" text-xl px-5 font-normal cursor-pointer">Metaverse</div>
+        <div className=" text-xl px-5 font-normal cursor-pointer">Polkadot</div>
+        <div className=" text-xl px-5 font-normal cursor-pointer">BNB chain</div>
+        <div className=" text-xl px-5 font-normal cursor-pointer">Solana</div>
+        <div className=" text-xl px-5 font-normal cursor-pointer">Avalanche</div>
+        <div className=" text-xl px-5 font-normal cursor-pointer text-slate-600 ">
           show rows
         </div>
-        <div className="flex bg-slate-200 p-2 mx-1 shadow-sm items-center rounded-lg cursor-pointer">
+        <div className="flex bg-slate-200 mx-1 shadow-sm items-center rounded-lg cursor-pointer p-2">
           <div>20</div>
-          <i className="bi bi-chevron-compact-down"></i>
+          <i className="text-xl mx-1 bi bi-chevron-compact-down"></i>
         </div>
-        <div className="flex bg-slate-200 p-2 mx-1 shadow-sm items-center rounded-lg cursor-pointer ">
-          <i className="py-2 bi bi-sliders"></i>
-          <div className="px-2">Filters</div>
+        <div className="flex bg-slate-200 mx-1 shadow-sm items-center rounded-lg cursor-pointer p-2">
+          <i className=" text-xl mx-1 bi bi-sliders"></i>
+          <div className="px-2 text-xl">Filters</div>
         </div>
-        <div className="flex bg-slate-200 p-2 mx-1 shadow-sm items-center rounded-lg cursor-pointer">
-          <i className="bi bi-ui-checks-grid"></i>
-          <div className="px-2">Customize</div>
+        <div className="flex bg-slate-200 mx-1 shadow-sm items-center rounded-lg cursor-pointer p-2">
+          <i className="text-xl mx-1 bi bi-ui-checks-grid"></i>
+          <div className="px-2 text-xl">Customize</div>
         </div>
-        <div className="flex bg-slate-200 p-2 mx-1   shadow-sm items-center rounded-lg cursor-pointer">
-          <i className="bi bi-list"></i>
-          <i className="px-px bi bi-border-all"></i>
+        <div className="flex bg-slate-200 mx-1 shadow-sm items-center rounded-lg cursor-pointer p-2">
+          <i className="text-xl mx-1 bi bi-list"></i>
+          <i className="px-px text-xl mx-1 bi bi-border-all"></i>
         </div>
       </div>
 
