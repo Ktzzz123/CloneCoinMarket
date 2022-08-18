@@ -22,7 +22,6 @@ class StaticStoreClass {
 
         this.socketInstance.on('connect', () => {
             this.socketInstance.on('market-data', (msg) => {
-                // console.log('msg',msg)
                 const StructureData = this.StructureData
                 if (!StructureData[msg.symbol_id]) {
                     StructureData[msg.symbol_id] = new MarketSymbolInfo()

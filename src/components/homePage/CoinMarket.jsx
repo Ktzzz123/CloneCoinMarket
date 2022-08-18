@@ -31,14 +31,19 @@ const rowConfig = [
     currency1: "BSW",
     currency2: "USDT",
   },
+  {
+    exchange: "BINANCE",
+    currency1: "ADA",
+    currency2: "USDT",
+  },
+  {
+    exchange: "BINANCE",
+    currency1: "DOGE",
+    currency2: "USDT",
+  },
 ];
-const listSymbolInfo = ["BTC", "ETH", "LPT", "BNB", "BSW","ADA","DOGE"];
-
 
 export default function CoinMarket(props) {
-  const navigate = useNavigate();
-  const dataTabRef = useRef([]);
-
   useEffect(() => {
     let temp = [];
     for (var i = 0; i < rowConfig.length; i++) {
@@ -46,43 +51,21 @@ export default function CoinMarket(props) {
         `${rowConfig[i].exchange}_SPOT_${rowConfig[i].currency1}_${rowConfig[i].currency2}`
       );
     }
-    temp = JSON.stringify(temp);
-
-    asyncSubData();
+    let temp2 = [];
+    temp2 = JSON.stringify(temp);
+    // console.log(temp2);
+    // console.log(typeof temp2);
+    asyncSubData(temp2);
   }, []); // run the first time and just run when there are a change in rowConfig
 
-  const asyncSubData = async () => {
-    // console.log('params',params)
-    // console.log("asyncSubData");
+  const asyncSubData = async (symbol_id) => {
     const data = await subscribeServer({
       method: "sub",
-      symbol_ids: [
-        "BINANCE_SPOT_BTC_USDT",
-        "BINANCE_SPOT_ETH_USDT",
-        "BINANCE_SPOT_LPT_USDT",
-        "BINANCE_SPOT_BNB_USDT",
-        "BINANCE_SPOT_BSW_USDT",
-        "BINANCE_SPOT_ADA_USDT",
-        "BINANCE_SPOT_DOGE_USDT",
-        
-      ],
+      symbol_ids: [symbol_id],
     });
+    console.log("data", data);
   };
-  useEffect(() => {
-    const asyncGetDataCoin = async (symbol_id) => {
-      const data = await methodCall({
-        method: "cmc_crypto_info",
-        params: [symbol_id],
-      });
-      StaticStore.SymbolInfo[symbol_id] = data.result;
-      // console.log('dung',data)
-    };
 
-    listSymbolInfo.forEach((symbol_id) => {
-      asyncGetDataCoin(symbol_id);
-      // console.log(symbol_id);
-    });
-  }, []);
 
   return (
     <div className="mx-6">
@@ -92,21 +75,29 @@ export default function CoinMarket(props) {
           <div className="px-2 text-xl">Watchlist</div>
         </div>
         <div className="flex items-center  bg-slate-200 rounded-xl p-2 m-2">
-        <i class="bi bi-box-fill"></i>
+          <i class="bi bi-box-fill"></i>
           <div className=" text-xl px-2">Portfolio</div>
         </div>
         <div className="h-10 w-px bg-slate-400 mx-2"></div>
         <div className=" text-xl items-center py-6 px-5 bg-blue-100 flex justify-center text-blue-700 font-bold h-10 rounded-xl">
           Cryptocurrencies
         </div>
-        <div className=" text-xl px-5 font-normal cursor-pointer">Categories</div>
+        <div className=" text-xl px-5 font-normal cursor-pointer">
+          Categories
+        </div>
         <div className=" text-xl px-5 font-normal cursor-pointer">DeFi</div>
         <div className=" text-xl px-5 font-normal cursor-pointer">NFT</div>
-        <div className=" text-xl px-5 font-normal cursor-pointer">Metaverse</div>
+        <div className=" text-xl px-5 font-normal cursor-pointer">
+          Metaverse
+        </div>
         <div className=" text-xl px-5 font-normal cursor-pointer">Polkadot</div>
-        <div className=" text-xl px-5 font-normal cursor-pointer">BNB chain</div>
+        <div className=" text-xl px-5 font-normal cursor-pointer">
+          BNB chain
+        </div>
         <div className=" text-xl px-5 font-normal cursor-pointer">Solana</div>
-        <div className=" text-xl px-5 font-normal cursor-pointer">Avalanche</div>
+        <div className=" text-xl px-5 font-normal cursor-pointer">
+          Avalanche
+        </div>
         <div className=" text-xl px-5 font-normal cursor-pointer text-slate-600 ">
           show rows
         </div>
