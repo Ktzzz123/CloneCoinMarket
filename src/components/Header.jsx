@@ -577,15 +577,16 @@ export default function Header() {
             </div>
             {search ? (
               <div 
-              // onBlur={() => {
+              onMouseLeave={() => {
 
-              //   let temp = setTimeout(() => {
-              //     document.getElementById("search-box");
-              //   }, 100);
-              //   if (temp) {
-              //     setSearch(!search);
-              //   }
-              // }}
+                // let temp = setTimeout(() => {
+                //   document.getElementById("search-box");
+                // }, 100);
+                // if (temp) {
+                //   setSearch(!search);
+                // }
+                setSearch(false);
+              }}
                 id="search-box"
                 className="absolute bg-white w-full h-fit border border-slate-200 rounded-2xl shadow-sm"
               >
@@ -618,7 +619,7 @@ export default function Header() {
                           // console.log(coin);
                           return (
                             <div onClick={() => {
-                              
+                              setSearch(false)
                               navigate("coin/" + coin?.symbol);
                             }} className="flex justify-between cursor-pointer">
                               <div className="flex items-center">
