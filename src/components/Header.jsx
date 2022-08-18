@@ -1,22 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, } from "react";
 import { eventList } from "../utils/constants/eventLists";
+import Loading from "../utils/Loading/Loading";
 import { methodCall } from "../utils/request";
 import StaticStore from "../utils/StaticStore";
 import { subscribeServer } from "../utils/subcribe";
 import Num from "./header/Num";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Header() {
-  const [dataCategories, setDataCategories] = useState();
-  const [rowData, setRowData]= useState()
+  const [dataCategories, setDataCategories] = useState([]);
+  const [rowData, setRowData] = useState([]);
   const [active1, setActive1] = useState(0);
+  const [search, setSearch] = useState(false);
+  const navigate = useNavigate();
+  const listSymbol = [
+    "BTC",
+    "ETH",
+    "XRP",
+    "UNI",
+    "FIL",
+    "FLOW",
+    "MKR",
+    "AR",
+    "CELO",
+    "ROSE",
+    "COMP",
+    "KEEP",
+    "RLY",
+    "YGG",
+    "OXT",
+    "HNS",
+  ];
   useEffect(() => {
     // asyncGetData()
-    setTimeout(() => {
-      asyncGetData()
-    }, 1000);
+    setTimeout(() => {}, 1000);
 
     const listenData = StaticStore.appEvent.subscribe((msg) => {
-      if (msg.type === eventList.UPDATE_MARKET_DATA) {  
+      if (msg.type === eventList.UPDATE_MARKET_DATA) {
         // console.log("UPDATE_MARKET_DATA", msg, StaticStore.StructureData)
       }
     });
@@ -25,28 +46,26 @@ export default function Header() {
     };
   }, []);
 
-  const asyncGetData = async () => {
-    const data = await methodCall({
-      method: "cmc_crypto_category",
-      params: ["605e2ce9d41eae1066535f7c"],
+  useEffect(() => {
+    const asyncGetDataCoin = async (symbol_id) => {
+      const data = await methodCall({
+        method: "cmc_crypto_info",
+        params: [symbol_id],
+      });
+      StaticStore.SymbolInfo[symbol_id] = data.result;
+      setDataCategories(Object.values(StaticStore.SymbolInfo));
+    };
+
+    listSymbol.forEach((symbol_id) => {
+      asyncGetDataCoin(symbol_id);
     });
-   if(data){
-    setDataCategories(Object.values(data.result.coins))
-    // console.log(data)
-    // console.log(Object.values(data.result.coins))
-    console.log('sau khi set',dataCategories)
-   }
-   else{
-    console.log('chua co data')
-   }
-  };
-  useEffect(()=>{
-    console.log('in useEffect',dataCategories)
-    
-  },[dataCategories])
+  }, []);
 
-
-
+  useEffect(() => {
+    // console.log(dataCategories);
+    setRowData(Object.values(dataCategories.slice(0, 6)));
+    // console.log(rowData);
+  }, [dataCategories]);
   return (
     <div className="bg-white">
       <div className="bg-white flex justify-between">
@@ -528,7 +547,17 @@ export default function Header() {
               </svg>
               <div className="px-2">Portfolio</div>
             </div>
-            <div className="bg-slate-300 rounded-lg flex w-96 h-14 items-center justify-between">
+            {/* Search box */}
+            <div
+              className="bg-slate-300 rounded-lg flex w-96 h-14 items-center justify-between cursor-pointer"
+              onClick={() => {
+                setSearch(!search);
+                setInterval(() => {
+                  let temp = document.getElementById("input-search");
+                  if (temp) temp.focus();
+                }, 100);
+              }}
+            >
               <div className="flex m-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -546,31 +575,86 @@ export default function Header() {
                 /
               </div>
             </div>
-            <div className="absolute bg-white w-full h-96 border border-slate-800">
+            {search ? (
+              <div 
+              // onBlur={() => {
+
+              //   let temp = setTimeout(() => {
+              //     document.getElementById("search-box");
+              //   }, 100);
+              //   if (temp) {
+              //     setSearch(!search);
+              //   }
+              // }}
+                id="search-box"
+                className="absolute bg-white w-full h-fit border border-slate-200 rounded-2xl shadow-sm"
+              >
                 <div className="m-5">
-
-              <div className="flex justify-between ">
-                <i className="mx-2 bi bi-search"></i>
-                <input
-                  className="w-full focus:outline-none "
-                  type="text"
-                  placeholder="Search coin, pair, contract address or exchange"
-                  maxLength={200}
-                ></input>
-                <i className="mx-2 bi bi-x-circle cursor-pointer"></i>
-              </div>
-              <div className="my-5">
-                <div className="flex">
-                  <div>Trending</div>
-                  <i className="bi bi-fire text-orange-600"></i>
+                  <div className="flex justify-between ">
+                    <i className="mx-2 bi bi-search"></i>
+                    <input
+                      id="input-search"
+                      className="w-full focus:outline-none "
+                      type="text"
+                      placeholder="Search coin, pair, contract address or exchange"
+                      maxLength={200}
+                    ></input>
+                    <i className="mx-2 bi bi-x-circle cursor-pointer"></i>
+                  </div>
+                  <div className=" p-5">
+                    <div className="flex text-xl">
+                      <div>Trending</div>
+                      <i
+                        onClick={() => {
+                          let temp = document.getElementById("input-search");
+                          console.log(temp);
+                        }}
+                        className="bi bi-fire text-orange-600"
+                      ></i>
+                    </div>
+                    <div>
+                      {rowData ? (
+                        rowData.map((coin) => {
+                          // console.log(coin);
+                          return (
+                            <div onClick={() => {
+                              
+                              navigate("coin/" + coin?.symbol);
+                            }} className="flex justify-between cursor-pointer">
+                              <div className="flex items-center">
+                                <img
+                                  className="m-2 w-10 h-10"
+                                  src={coin?.logo}
+                                  alt="logo"
+                                />
+                                <div className="m-2 font-bold">
+                                  {coin?.name}
+                                </div>
+                                <div className="m-2 text-slate-400">
+                                  {coin?.symbol}
+                                </div>
+                              </div>
+                              <div>
+                                <div className="text-slate-400 text-lg">
+                                  # {coin?.id}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <Loading />
+                      )}
+                    </div>
+                  </div>
+                  <div className="border-t-2 border-slate-200 p-5">
+                    <div className="text-xl">Recent searches</div>
+                  </div>
                 </div>
-                <div>Container</div>
               </div>
-              <div>
-
-              </div>
-                </div>
-            </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

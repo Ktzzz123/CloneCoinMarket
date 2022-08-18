@@ -63,7 +63,8 @@ export default function CoinMarket(props) {
         "BINANCE_SPOT_BNB_USDT",
         "BINANCE_SPOT_BSW_USDT",
         "BINANCE_SPOT_ADA_USDT",
-        "BINANCE_SPOT_DOGE_USDT"
+        "BINANCE_SPOT_DOGE_USDT",
+        
       ],
     });
   };
@@ -74,11 +75,12 @@ export default function CoinMarket(props) {
         params: [symbol_id],
       });
       StaticStore.SymbolInfo[symbol_id] = data.result;
-      // console.log('lay data coin')
+      // console.log('dung',data)
     };
 
     listSymbolInfo.forEach((symbol_id) => {
       asyncGetDataCoin(symbol_id);
+      // console.log(symbol_id);
     });
   }, []);
 
