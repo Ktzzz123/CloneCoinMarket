@@ -68,7 +68,7 @@ export default function Header() {
   }, [dataCategories]);
   return (
     <div className="bg-white ">
-      <div className="bg-white flex justify-between px-32 ">
+      <div className="bg-white flex justify-between px-32 py-5 ">
         <div className="flex items-center">
           <div className="flex text-xl mr-10">
             Cryptos: <Num content="20.240" />
@@ -96,18 +96,19 @@ export default function Header() {
         </div>
 
         <div className="flex items-center ">
-          <div className="mr-5 font-bold">English</div>
-          <div className="mr-5 font-bold">USD</div>
+          <div className="mr-5 cursor-pointer font-bold">English</div>
+          <div className="mr-5 cursor-pointer font-bold">USD</div>
           <div className="bg-slate-400 w-px"></div>
           <img
-            className="mx-5"
+            className="mx-5 cursor-pointer"
             src="https://s2.coinmarketcap.com/static/cloud/img/loyalty-program/diamond-icon.svg"
             alt="VIP"
+           
           />
-          <button className="m-5 p-3 border-solid border-blue-700 rounded-xl">
-            Login
+          <button onClick={()=>{navigate('/login')}} className="mx-5 font-bold p-3 border-solid border border-blue-700 rounded-xl">
+            Log in
           </button>
-          <button className="m-5 p-3 bg-blue-700 text-white rounded-xl ">
+          <button className="font-bold p-3 bg-blue-700 text-white rounded-xl ">
             Sign up
           </button>
         </div>
@@ -119,9 +120,10 @@ export default function Header() {
       <div className="relative flex justify-between  py-4 h-28 px-32   ">
         <div className="flex ">
           <img
-            className="w-72"
+            className="w-72 cursor-pointer"
             src="https://s2.coinmarketcap.com/static/cloud/img/coinmarketcap_1.svg?_=948d22e"
             alt="logo"
+            onClick={()=>{navigate('/')}}
           />
 
           <div className=" flex items-center justify-center">

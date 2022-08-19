@@ -9,7 +9,6 @@ export default function DetailsCoinPage() {
   const { id } = useParams();
   const [coin, setCoin] = useState({});
   const listSymbolInfo = ["BTC", "ETH", "LPT", "BNB", "BSW"];
-  const [toggle, setToggle] = useState(false)
 
   const asyncGetDataCoin = async (symbol_id) => {
     const data = await methodCall({
@@ -18,7 +17,6 @@ export default function DetailsCoinPage() {
     });
     StaticStore.SymbolInfo[symbol_id] = data.result;
     console.log("lay data coin",StaticStore.SymbolInfo);
-    setToggle(true)
     console.log("gan du lieu cho coin");
     console.log(StaticStore.SymbolInfo)
     for (var i in StaticStore.SymbolInfo) {
@@ -33,6 +31,7 @@ export default function DetailsCoinPage() {
     }
   };
 
+ 
 
   useEffect(() => {
     var isEmptyObj = Object.keys(StaticStore.SymbolInfo).length;

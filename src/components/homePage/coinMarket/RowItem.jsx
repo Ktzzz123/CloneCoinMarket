@@ -139,7 +139,6 @@ export const RowItem = ({ exchange, currency1, currency2, index }) => {
       <td>
         <img
           src="https://s3.coinmarketcap.com/generated/sparklines/web/7d/2781/1027.svg"
-          alt="image"
         />
       </td>
       <td>

@@ -19,7 +19,7 @@ class StaticStoreClass {
             // transports: ['polling'],
         })
         this.requestMap = new Map()
-
+        console.log(this.requestMap)
         this.socketInstance.on('connect', () => {
             this.socketInstance.on('market-data', (msg) => {
                 // console.log('msg',msg)
@@ -57,8 +57,11 @@ class StaticStoreClass {
             })
             this.socketInstance.on('method-response', (msg) => {
                 const requestBodyExtends = this.requestMap.get(msg.id)
+                // console.log(requestBodyExtends)
+                // console.log(msg);
                 requestBodyExtends.resolve(msg)
             })
+          
             this.socketInstance.on('sub-response', (msg) => {
                 const subBodyExtends = this.requestMap.get(msg.id)
                 subBodyExtends.resolve(msg)

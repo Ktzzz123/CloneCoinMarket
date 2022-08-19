@@ -31,13 +31,22 @@ const rowConfig = [
     currency1: "BSW",
     currency2: "USDT",
   },
+  {
+    exchange: "BINANCE",
+    currency1: "ADA",
+    currency2: "USDT",
+  },
+  {
+    exchange: "BINANCE",
+    currency1: "DOGE",
+    currency2: "USDT",
+  },
 ];
 const listSymbolInfo = ["BTC", "ETH", "LPT", "BNB", "BSW","ADA","DOGE"];
 
 
 export default function CoinMarket(props) {
-  const navigate = useNavigate();
-  const dataTabRef = useRef([]);
+
 
   useEffect(() => {
     let temp = [];
@@ -47,11 +56,11 @@ export default function CoinMarket(props) {
       );
     }
     temp = JSON.stringify(temp);
-
+    
     asyncSubData();
   }, []); // run the first time and just run when there are a change in rowConfig
 
-  const asyncSubData = async () => {
+  const asyncSubData = async (symbol_id) => {
     // console.log('params',params)
     // console.log("asyncSubData");
     const data = await subscribeServer({

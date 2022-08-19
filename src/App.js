@@ -7,6 +7,7 @@ import Homepage from './pages/Homepage';
 import io from 'socket.io-client'
 import { useEffect } from 'react';
 import AdvertiseSubscribeBanner from './components/homePage/AdvertiseSubscribeBanner';
+import Login from './pages/Login';
 
 
 
@@ -40,6 +41,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Homepage/>}/>
           <Route path='/coin/:id' element={<DetailsCoinPage/>}/>
+          <Route path='/login' element={<Login/>}/>
         </Routes>
         <AdvertiseSubscribeBanner/>
         <Footer/>

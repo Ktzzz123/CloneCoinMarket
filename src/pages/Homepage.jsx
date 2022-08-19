@@ -17,16 +17,11 @@ function Homepage(props) {
             "id": 1,
             "params": ["605e2ce9d41eae1066535f7c"]
         }))
-        
         socket.on('method-response',(msg)=>{
-        
           if(msg){
             setListCoins(msg.result.coins)
           }
-          
         })
-        
-    
       },[socket])
     
     return (
