@@ -7,6 +7,7 @@ export const sendChanels = {
     SUB: 'sub',
     UNSUB: 'unsub',
     METHOD: 'method',
+    
 }
 export const responseChanels = {
     SUB_RESPONSE: 'sub-response',

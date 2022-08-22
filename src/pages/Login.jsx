@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import StaticStore from "../utils/StaticStore";
 import { eventList } from "../utils/constants/eventLists";
 import Input from "../components/login/Input";
+import { methodCall } from "../utils/request";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ export default function Login() {
   const [dataAll, setDataAll] = useState(listCoin);
   const usernameRef = useRef();
   const PasswordRef = useRef();
+  var param = []
 
   useEffect(() => {
     const listenData = StaticStore.appEvent.subscribe(async (msg) => {
@@ -51,10 +53,19 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const user = new FormData(e.target)
-    console.log(Object.fromEntries(user.entries()))
-    console.log(user);
-  };
+    console.log(Object.values(Object.fromEntries(user.entries())))
+    param = Object.values(Object.fromEntries(user.entries()));
+    Login(param)
+  }
+  const Login = async (param) => {
+    const data = await methodCall({
+      method: "auth_login",
+      params: param,
+    });
+    console.log(data)
+    alert(data.message)
 
+};
   return (
     <div className="h-screen flex">
       <div className="w-1/2">
