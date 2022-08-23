@@ -5,11 +5,11 @@ import Header from './components/Header';
 import DetailsCoinPage from './pages/DetailsCoinPage';
 import Homepage from './pages/Homepage';
 import io from 'socket.io-client'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import AdvertiseSubscribeBanner from './components/homePage/AdvertiseSubscribeBanner';
 import Login from './pages/Login';
-
-
+import authContext from './utils/auth/authContext';
+import React from 'react'
 
 const socket = io('http://io.nvdise.space', {
   timeout: 2000,
@@ -31,8 +31,18 @@ function App() {
     })
   })
   
+  const [authenticated,setAuthenticated] = useState(false);
+  const [token, setToken] = useState('')
+  const [user, setUser] = useState({})
+
+  useEffect(()=>{
+    console.log(token)
+    console.log(JSON.stringify(user))
+  },[token,authenticated,user])
 
   return (
+    <authContext.Provider value={{authenticated,setAuthenticated,token, setToken, user,setUser}}>
+
     <div className='bg-slate-50 h-screen'>
         <Header/>
       <div className='px-32 bg-slate-50'>
@@ -50,6 +60,7 @@ function App() {
       
       </div>
     </div>
+    </authContext.Provider >
   );
 }
 export default App;

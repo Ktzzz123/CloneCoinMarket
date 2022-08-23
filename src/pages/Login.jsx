@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { data } from "../utils/data";
@@ -9,6 +9,9 @@ import StaticStore from "../utils/StaticStore";
 import { eventList } from "../utils/constants/eventLists";
 import Input from "../components/login/Input";
 import { methodCall } from "../utils/request";
+import authContext from "../utils/auth/authContext";
+
+
 
 export default function Login() {
   const navigate = useNavigate();
@@ -17,7 +20,7 @@ export default function Login() {
   const usernameRef = useRef();
   const PasswordRef = useRef();
   var param = []
-
+  const { setAuthenticated,setToken,setUser } = useContext(authContext);
   useEffect(() => {
     const listenData = StaticStore.appEvent.subscribe(async (msg) => {
       if (msg.type === eventList.UPDATE_MARKET_DATA) {
@@ -53,7 +56,7 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const user = new FormData(e.target)
-    console.log(Object.values(Object.fromEntries(user.entries())))
+    // console.log(Object.values(Object.fromEntries(user.entries())))
     param = Object.values(Object.fromEntries(user.entries()));
     Login(param)
   }
@@ -64,6 +67,11 @@ export default function Login() {
     });
     console.log(data)
     alert(data.message)
+    if(data.success){
+      setAuthenticated(true)
+      setToken(data.result.token)
+      setUser(data.result.user)
+    }
 
 };
   return (

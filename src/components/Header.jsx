@@ -14,6 +14,7 @@ export default function Header() {
   const [active1, setActive1] = useState(0);
   const [search, setSearch] = useState(false);
   const navigate = useNavigate();
+  // const 
   const listSymbol = [
     "BTC",
     "ETH",

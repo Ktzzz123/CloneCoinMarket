@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import StaticStore from "../../utils/StaticStore";
@@ -92,6 +93,7 @@ export default function CoinMarket(props) {
       // console.log(symbol_id);
     });
   }, []);
+
 
   return (
     <div className="mx-6">

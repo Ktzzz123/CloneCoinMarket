@@ -31,6 +31,24 @@ export default function DetailsCoinPage() {
       }
     }
   };
+  useEffect(()=>{
+    // eslint-disable-next-line no-undef
+    new TradingView.widget(
+      {
+      "autosize": true,
+      "symbol": "BINANCE:BTCUSDT",
+      "interval": "D",
+      "timezone": "Etc/UTC",
+      "theme": "light",
+      "style": "1",
+      "locale": "vi_VN",
+      "toolbar_bg": "#f1f3f6",
+      "enable_publishing": false,
+      "allow_symbol_change": true,
+      "container_id": "tradingview_0352e"
+    }
+      )
+  },[])
 
   useEffect(() => {
     var isEmptyObj = Object.keys(StaticStore.SymbolInfo).length;
@@ -108,31 +126,13 @@ export default function DetailsCoinPage() {
           <div className="flex border-solid border-2 border-yellow-400">
             <div className="w-2/3 border-solid border-2 border-indigo-600 mr-5">
               <div>
-    {/* <div className="tradingview-widget-container">
+    <div className="tradingview-widget-container">
       <div id="tradingview_0352e"></div>
       
       <div className="tradingview-widget-copyright"><a href="https://vn.tradingview.com/symbols/BTCUSDT/?exchange=BINANCE" rel="noopener" target="_blank"><span class="blue-text">BTCUSDT Biểu đồ</span> </a> bởi TradingView</div>
             <Helmet>
-                <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-        <script type="text/javascript">
-              {new TradingView.widget(
-              {
-              "autosize": true,
-              "symbol": "BINANCE:BTCUSDT",
-              "interval": "D",
-              "timezone": "Etc/UTC",
-              "theme": "light",
-              "style": "1",
-              "locale": "vi_VN",
-              "toolbar_bg": "#f1f3f6",
-              "enable_publishing": false,
-              "allow_symbol_change": true,
-              "container_id": "tradingview_0352e"
-            }
-        )}
-        </script>
             </Helmet>
-    </div> */}
+    </div>
               </div>
 
               <div className="border border-solid border-slate-700">

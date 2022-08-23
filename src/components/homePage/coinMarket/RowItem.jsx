@@ -38,6 +38,7 @@ export const RowItem = ({ exchange, currency1, currency2, index }) => {
     };
   }, [currency1]);
 
+
   // console.log(rowData)
   const redOrGreen = (num) => {
     if (num > 0) return "text-green-600";
