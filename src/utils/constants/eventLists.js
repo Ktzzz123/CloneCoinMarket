@@ -1,6 +1,7 @@
 
 export const eventList = {
     UPDATE_MARKET_DATA: 'UPDATE_MARKET_DATA',
+    CONNECT_SOCKET: 'CONNECT_SOCKET'
 }
 
 export const sendChanels = {

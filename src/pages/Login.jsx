@@ -7,6 +7,7 @@ import "react-d3-treemap/dist/react.d3.treemap.css";
 import { useEffect } from "react";
 import StaticStore from "../utils/StaticStore";
 import { eventList } from "../utils/constants/eventLists";
+import { glb_sv } from "../utils";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function Login() {
 
   const listCoin = ["BTC", "ETH", "LPT", "BNB", "BSW","ADA","DOGE"]
   useEffect(()=>{
-    const listenData = StaticStore.appEvent.subscribe(async (msg) => {
+    const listenData = glb_sv.commonEvent.subscribe(async (msg) => {
       if (msg.type === eventList.UPDATE_MARKET_DATA) {
         const [exchangeSplit, tradeTypeSplit, currency1Split, currency2Split] =
           msg.symbol_id?.split("_");

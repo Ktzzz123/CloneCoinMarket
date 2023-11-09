@@ -5,6 +5,7 @@ import { methodCall } from "../../../utils/request";
 import { eventList } from "../../../utils/constants/eventLists";
 import cloneDeep from "lodash.clonedeep";
 import { data } from "autoprefixer";
+import { glb_sv } from "../../../utils";
 
 export default function Card({ listCoin = [] }) {
   const [dataCoin, setDataCoin] = useState(listCoin);
@@ -62,7 +63,7 @@ export default function Card({ listCoin = [] }) {
   // }, []);
 
   useEffect(() => {
-    const listenData = StaticStore.appEvent.subscribe(async (msg) => {
+    const listenData = glb_sv.commonEvent.subscribe(async (msg) => {
       if (msg.type === eventList.UPDATE_MARKET_DATA) {
         const [exchangeSplit, tradeTypeSplit, currency1Split, currency2Split] =
           msg.symbol_id?.split("_");

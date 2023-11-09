@@ -3,7 +3,7 @@ import StaticStore from "./StaticStore"
 
 
 
-export const methodCall = async (requestBody = { method: '', params: ''}) => {
+export const methodCall = async (requestBody = { method: '', params: '' }) => {
     return new Promise((resolve, reject) => {
         const idRequest = StaticStore.getIdRequest()
         const requestBodyExtends = { ...requestBody, resolve, id: idRequest }
@@ -11,7 +11,7 @@ export const methodCall = async (requestBody = { method: '', params: ''}) => {
         // console.log('requestBody',requestBody)
         StaticStore.requestMap.set(idRequest, requestBodyExtends)
         // console.log("call", [idRequest, requestBody]);
-        StaticStore.socketInstance.emit(sendChanels.METHOD, { ...requestBody, id: idRequest })
+        StaticStore.socket_stream.emit(sendChanels.METHOD, { ...requestBody, id: idRequest })
     })
 }
 

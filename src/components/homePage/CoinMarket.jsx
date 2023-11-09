@@ -42,7 +42,7 @@ const rowConfig = [
     currency2: "USDT",
   },
 ];
-const listSymbolInfo = ["BTC", "ETH", "LPT", "BNB", "BSW","ADA","DOGE"];
+const listSymbolInfo = ["BTC", "ETH", "LPT", "BNB", "BSW", "ADA", "DOGE"];
 
 
 export default function CoinMarket(props) {
@@ -56,7 +56,7 @@ export default function CoinMarket(props) {
       );
     }
     temp = JSON.stringify(temp);
-    
+
     asyncSubData();
   }, []); // run the first time and just run when there are a change in rowConfig
 
@@ -73,18 +73,20 @@ export default function CoinMarket(props) {
         "BINANCE_SPOT_BSW_USDT",
         "BINANCE_SPOT_ADA_USDT",
         "BINANCE_SPOT_DOGE_USDT",
-        
+
       ],
     });
   };
+  
   useEffect(() => {
     const asyncGetDataCoin = async (symbol_id) => {
       const data = await methodCall({
         method: "cmc_crypto_info",
         params: [symbol_id],
       });
+
       StaticStore.SymbolInfo[symbol_id] = data.result;
-      // console.log('dung',data)
+    
     };
 
     listSymbolInfo.forEach((symbol_id) => {
@@ -101,7 +103,7 @@ export default function CoinMarket(props) {
           <div className="px-2 text-xl">Watchlist</div>
         </div>
         <div className="flex items-center  bg-slate-200 rounded-xl p-2 m-2">
-        <i class="bi bi-box-fill"></i>
+          <i className="bi bi-box-fill"></i>
           <div className=" text-xl px-2">Portfolio</div>
         </div>
         <div className="h-10 w-px bg-slate-400 mx-2"></div>

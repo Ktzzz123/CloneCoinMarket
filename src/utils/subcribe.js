@@ -6,6 +6,6 @@ export const subscribeServer = async (subBody) => {
         const idRequest = StaticStore.getIdRequest()
         const subBodyExtends = { ...subBody, resolve, id: idRequest }
         StaticStore.requestMap.set(idRequest, subBodyExtends)
-        StaticStore.socketInstance.emit(sendChanels.SUB, { ...subBody, id: idRequest })
+        StaticStore.socket_stream.emit(sendChanels.SUB, { ...subBody, id: idRequest })
     })
 }

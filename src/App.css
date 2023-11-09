@@ -5,5 +5,7 @@
     @apply font-Inter;
     
   }
-
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }

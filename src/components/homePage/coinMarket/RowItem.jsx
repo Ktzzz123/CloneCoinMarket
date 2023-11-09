@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { eventList } from "../../../utils/constants/eventLists";
 import StaticStore from "../../../utils/StaticStore";
 import numeral from "numeral";
+import { glb_sv } from "../../../utils";
 
 export const RowItem = ({ exchange, currency1, currency2, index }) => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ export const RowItem = ({ exchange, currency1, currency2, index }) => {
     return numeral(number).format("$0,0.00");
   };
   useEffect(() => {
-    const listenData = StaticStore.appEvent.subscribe(async (msg) => {
+    const listenData = glb_sv.commonEvent.subscribe(async (msg) => {
       if (msg.type === eventList.UPDATE_MARKET_DATA) {
         const [exchangeSplit, tradeTypeSplit, currency1Split, currency2Split] =
           msg.symbol_id?.split("_");
